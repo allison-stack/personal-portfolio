@@ -19,7 +19,7 @@ const Navbar = () => {
             <a href="#top">
                 
             </a>
-            <ul className='hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50'>
+            <ul className='hidden md:flex items-center gap-10 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50'>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -35,7 +35,7 @@ const Navbar = () => {
                 </button>
             </div>
 
-            <ul ref={sideMenuRef} className='flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500'>
+            <ul ref={sideMenuRef} className='flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-green-50 transition duration-500'>
                 <div className='absolute right-6 top-6' onClick={closeMenu}>
                     <IoIosClose className='h-10 w-10 cursor-pointer' />
                 </div>
