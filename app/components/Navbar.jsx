@@ -1,10 +1,11 @@
-import React, {useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { FaMoon } from 'react-icons/fa';
 import { MdOutlineMenu } from "react-icons/md";
 import { IoIosClose } from "react-icons/io";
 
 const Navbar = () => {
 
+    const [isScroll, setIsScroll] = useState(false);
     const sideMenuRef = useRef();
     const openMenu = () => {
         sideMenuRef.current.style.transform = 'translateX(-16rem)';
@@ -13,13 +14,23 @@ const Navbar = () => {
         sideMenuRef.current.style.transform = 'translateX(16rem)';
     }
 
+    useEffect(() => {
+        window.addEventListener('scroll', () => {
+            if(scrollY > 50) {
+                setIsScroll(true);
+            } else {
+                setIsScroll(false);
+            }
+        })
+    }, [])
+
   return (
     <>
-        <nav className='w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50'>
+        <nav className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 ${isScroll ? "bg-white backdrop-blur-lg shadow-sm bg-opacity-50" : ""}`}>
             <a href="#top">
-                
+
             </a>
-            <ul className='hidden md:flex items-center gap-10 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50'>
+            <ul className={`hidden md:flex items-center gap-10 lg:gap-8 rounded-full px-12 py-3 ${isScroll ? "" : "bg-white shadow-sm bg-opacity-50"} bg-white shadow-sm bg-opacity-50`}>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
