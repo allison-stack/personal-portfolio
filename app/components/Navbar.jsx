@@ -30,11 +30,11 @@ const Navbar = () => {
             <a href="#top">
 
             </a>
-            <ul className={`hidden md:flex items-center gap-10 lg:gap-8 rounded-full px-12 py-3 ${isScroll ? "" : "bg-white shadow-sm bg-opacity-50"} bg-white shadow-sm bg-opacity-50`}>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+            <ul className={`hidden md:flex items-center gap-15 lg:gap-8 rounded-full px-25 py-3 ${isScroll ? "" : "bg-white shadow-sm bg-opacity-50"} bg-white shadow-sm bg-opacity-50`}>
+                <li><a className='font-Ovo' href="#home">Home</a></li>
+                <li><a className='font-Ovo' href="#about">About</a></li>
+                <li><a className='font-Ovo' href="#projects">Projects</a></li>
+                <li><a className='font-Ovo' href="#contact">Contact</a></li>
             </ul>
             <div className='flex items-center gap-4'>
                 <button>
@@ -46,7 +46,7 @@ const Navbar = () => {
                 </button>
             </div>
 
-            <ul ref={sideMenuRef} className='flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-green-50 transition duration-500'>
+            <ul ref={sideMenuRef} className='flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-blue-50 transition duration-500'>
                 <div className='absolute right-6 top-6' onClick={closeMenu}>
                     <IoIosClose className='h-10 w-10 cursor-pointer' />
                 </div>
