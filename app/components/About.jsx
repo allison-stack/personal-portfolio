@@ -4,18 +4,19 @@ const About = () => {
   return (
     <div id='about' className='w-full px-[12%]
      py-10 scroll-mt-20'>
-        <h4 className='text-center mb-2 text-lg font-Ovo'>Introduction</h4>
+        <h4 className='text-center mb-2 text-lg font-Ovo'>Read more...</h4>
         <h2 className='text-center text-5xl font-Ovo'>About Me</h2>
-        <div className='flex w-full flex-col lg:flex-row items-center gap-20 my-20'>
-            <div className='w-64 sm:w-80 rounded-3xl max-w-none'>
-                <h4>Image</h4>
-            </div>
+        <div className='flex w-full flex-col lg:flex-row items-center gap-20 my-10'>
             <div className='flex-1'>
                 <p>
-                    Hello! My name is Allison and I'm a software developer...
+                    I'm someone who loves picking up new things/experiences. I enjoy all things tech, food, sports, science, and much more. My willingness to explore results in more hobbies being made.
+                </p>
+                <br />
+                <p>
+                    I rotate through many hobbies. I go hiking, play badminton with friends, stargaze, and I'm currently aiming to eat my way through popular restaurants in Markham.
                 </p>
                 <ul>
-                    <li>display familiar programming languages here as cards</li>
+                    <li>insert pictures</li>
                 </ul>
             </div>
         </div>
