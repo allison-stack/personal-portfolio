@@ -17,7 +17,7 @@ const Header = () => {
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
             <a href="#contact" className="px-8 py-3 border rounded-full flex items-center gap-2 transition-all duration-200 hover:opacity-80 hover-lift" style={{borderColor: 'var(--accent-primary)', backgroundColor: 'var(--accent-primary)', color: 'white'}}>contact me</a>
-            <a href="/resume.pdf" download className="px-8 py-3 border rounded-full flex items-center gap-2 transition-all duration-200 hover:opacity-80 hover-lift" style={{borderColor: 'var(--border-primary)', color: 'var(--text-primary)'}}>my resume</a>
+            <a href="assets/Allison_Zhao's_Resume.pdf" download className="px-8 py-3 border rounded-full flex items-center gap-2 transition-all duration-200 hover:opacity-80 hover-lift" style={{borderColor: 'var(--border-primary)', color: 'var(--text-primary)'}}>my resume</a>
         </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
 const Contact = () => {
   return (
@@ -16,9 +16,7 @@ const Contact = () => {
                 Let's connect!
               </h3>
               <p style={{color: 'var(--text-secondary)'}}>
-                I'm always interested in new opportunities and collaborations. 
-                Whether you have a project in mind or just want to chat about technology, 
-                feel free to reach out!
+                I'm currently looking for summer 2026 SWE internships. Send me an email if you (or friends) are hiring!
               </p>
             </div>
             
@@ -43,47 +41,49 @@ const Contact = () => {
                 <span style={{color: 'var(--text-primary)'}}>github.com/allison-stack</span>
               </a>
               
-              <div className="flex items-center gap-3 p-3 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
-                <FaMapMarkerAlt style={{color: 'var(--accent-primary)'}} size={20} />
-                <span style={{color: 'var(--text-primary)'}}>Toronto, Canada</span>
-              </div>
+              <a
+                href="https://www.linkedin.com/in/allison-zhao-41a3a21b6/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:opacity-80"
+                style={{backgroundColor: 'var(--bg-secondary)'}}
+              >
+                <FaLinkedin style={{color: 'var(--accent-primary)'}} size={20} />
+                <span style={{color: 'var(--text-primary)'}}>linkedin.com/in/allison-zhao-41a3a21b6/</span>
+              </a>
             </div>
           </div>
           
-          {/* Quick Facts */}
           <div className="space-y-6">
             <div>
               <h3 className="text-2xl font-Ovo mb-4" style={{color: 'var(--text-primary)'}}>
-                Quick facts
+                Positions I'm interested in:
               </h3>
             </div>
             
             <div className="space-y-4">
               <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
                 <h4 className="font-Ovo font-semibold mb-2" style={{color: 'var(--text-primary)'}}>
-                  Currently working on
+                  Software Engineer
                 </h4>
-                <p style={{color: 'var(--text-secondary)'}}>
-                  Optimizing Huawei's SQL engine
-                </p>
               </div>
               
               <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
                 <h4 className="font-Ovo font-semibold mb-2" style={{color: 'var(--text-primary)'}}>
-                  Learning
+                  Data Analyst
                 </h4>
-                <p style={{color: 'var(--text-secondary)'}}>
-                  AI/ML and quantum computing
-                </p>
               </div>
               
               <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
                 <h4 className="font-Ovo font-semibold mb-2" style={{color: 'var(--text-primary)'}}>
-                  Fun fact
+                  Machine Learning Engineer
                 </h4>
-                <p style={{color: 'var(--text-secondary)'}}>
-                  I love rock climbing! 🧗‍♀️
-                </p>
+              </div>
+
+              <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
+                <h4 className="font-Ovo font-semibold mb-2" style={{color: 'var(--text-primary)'}}>
+                  DevOps Engineer
+                </h4>
               </div>
             </div>
           </div>
