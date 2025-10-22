@@ -16,7 +16,7 @@ const Contact = () => {
                 Let's connect!
               </h3>
               <p style={{color: 'var(--text-secondary)'}}>
-                I'm currently looking for summer 2026 SWE internships. Send me an email if you (or friends) are hiring!
+                I'm looking for summer 2026 SWE internships and new grad roles. Send me an email if you (or friends) are hiring!
               </p>
             </div>
             
