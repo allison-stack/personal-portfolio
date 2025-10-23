@@ -16,7 +16,7 @@ const Contact = () => {
                 Let's connect!
               </h3>
               <p style={{color: 'var(--text-secondary)'}}>
-                I'm looking for summer 2026 SWE internships and new grad roles. Send me an email if you (or friends) are hiring!
+                I'm open to talk about my experience, potential opportunities, or collaborations on projects, Leetcode, etc. Feel free to reach out through any of the platforms below:
               </p>
             </div>
             
@@ -54,36 +54,41 @@ const Contact = () => {
             </div>
           </div>
           
+
+          {/* Quick Facts */}
           <div className="space-y-6">
             <div>
               <h3 className="text-2xl font-Ovo mb-4" style={{color: 'var(--text-primary)'}}>
-                Positions I'm interested in:
+                Fun facts about me
               </h3>
             </div>
             
             <div className="space-y-4">
               <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
                 <h4 className="font-Ovo font-semibold mb-2" style={{color: 'var(--text-primary)'}}>
-                  Software Engineer
+                  Music taste
                 </h4>
+                <p style={{color: 'var(--text-secondary)'}}>
+                  I'm an avid c-pop listener 🎵
+                </p>
               </div>
               
               <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
                 <h4 className="font-Ovo font-semibold mb-2" style={{color: 'var(--text-primary)'}}>
-                  Data Analyst
+                  Favorite color
                 </h4>
+                <p style={{color: 'var(--text-secondary)'}}>
+                  White (#FFFFFF) 🤍
+                </p>
               </div>
               
               <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
                 <h4 className="font-Ovo font-semibold mb-2" style={{color: 'var(--text-primary)'}}>
-                  Machine Learning Engineer
+                  Programming language of choice
                 </h4>
-              </div>
-
-              <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
-                <h4 className="font-Ovo font-semibold mb-2" style={{color: 'var(--text-primary)'}}>
-                  DevOps Engineer
-                </h4>
+                <p style={{color: 'var(--text-secondary)'}}>
+                  Python 🐍
+                </p>
               </div>
             </div>
           </div>
