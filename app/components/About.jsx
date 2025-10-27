@@ -10,13 +10,13 @@ const About = () => {
                 <p style={{color: 'var(--text-primary)'}}>
                     I'm someone who loves picking up new things. I enjoy all things tech, food, sports, science, and much more. It's no wonder I make new hobbies often haha...
                 </p>
-                <p style={{color: 'var(--text-primary)'}}>
+                <div style={{color: 'var(--text-primary)'}}>
                     I rotate through many hobbies:
                     <li>Tech-wise I'm thoroughly involved in my university community, I'm a VP on the DeltaHacks organizing team and a software developer lead for McMaster's Quantum Key Distribution Team</li>
                     <li>Food-wise I love experiencing local food! Some of my favorites are kbbq, noodles, and burrito bowls</li>
                     <li>Staying active is a must for me. You can often see me hiking, playing badminton with friends, and trying my best at rock climbing</li>
                     <li>Some miscellaneous hobbies of mine include photography and stargazing</li>
-                </p>
+                </div>
                 <div className="mt-6 p-4 rounded-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
                     <p className="text-sm" style={{color: 'var(--text-muted)'}}>
                         📸 Photo gallery coming soon...
