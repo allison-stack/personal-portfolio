@@ -28,7 +28,16 @@ const Navbar = () => {
 
   return (
     <>
-        <nav className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 transition-all duration-300 ${isScroll ? "backdrop-blur-lg shadow-sm" : ""}`} style={{backgroundColor: isScroll ? 'var(--bg-primary)' : 'transparent'}}>
+        <nav 
+            className={`w-full fixed top-0 left-0 px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 transition-all duration-300 backdrop-blur-md ${isScroll ? "shadow-sm" : ""}`} 
+            style={{
+                backgroundColor: isScroll 
+                    ? 'var(--bg-primary)' 
+                    : theme === 'light' 
+                        ? 'rgba(255, 255, 255, 0.85)' 
+                        : 'rgba(15, 23, 42, 0.85)'
+            }}
+        >
             <a href="#top" className="text-2xl font-Ovo font-bold" style={{color: 'var(--text-primary)'}}>
                 <BsStars />
             </a>

@@ -24,29 +24,87 @@ const About = () => {
   }, [photos.length]);
 
   return (
-    <div id='about' className='w-full px-[12%] py-10 scroll-mt-20 fade-in-up' style={{backgroundColor: 'var(--bg-primary)'}}>
-        <h4 className='text-center mb-2 text-lg font-Ovo' style={{color: 'var(--text-secondary)'}}>Read more...</h4>
-        <h2 className='text-center text-5xl font-Ovo' style={{color: 'var(--text-primary)'}}>About Me</h2>
-        <div className='flex w-full flex-col lg:flex-row items-center gap-20 my-10'>
-            <div className='flex-1 space-y-4'>
-                <p style={{color: 'var(--text-primary)'}}>
-                    I'm someone who loves picking up new things. I enjoy all things tech, food, sports, science, and much more. It's no wonder I make new hobbies often haha...
-                </p>
-                <div style={{color: 'var(--text-primary)'}}>
-                    I rotate through many hobbies:
-                    <li>Tech-wise I'm thoroughly involved in my university community, I'm a VP on the DeltaHacks organizing team and a software developer lead for McMaster's Quantum Key Distribution Team</li>
-                    <li>Food-wise I love experiencing local food! Some of my favorites are kbbq, noodles, and burrito bowls</li>
-                    <li>Staying active is a must for me. You can often see me hiking, playing badminton with friends, and trying my best at rock climbing</li>
-                    <li>Some miscellaneous hobbies of mine include photography and stargazing</li>
+    <div id='about' className='w-full px-6 sm:px-8 lg:px-[10%] py-16 lg:py-20 scroll-mt-20 fade-in-up' style={{backgroundColor: 'var(--bg-primary)'}}>
+        <div className='max-w-5xl mx-auto'>
+            <div className='text-center mb-12'>
+                <h4 className='mb-3 text-base md:text-lg font-Ovo tracking-wide' style={{color: 'var(--text-secondary)'}}>Read more...</h4>
+                <h2 className='text-4xl md:text-5xl lg:text-6xl font-Ovo' style={{color: 'var(--text-primary)'}}>About Me</h2>
+            </div>
+            
+            <div className='max-w-4xl mx-auto space-y-10'>
+                {/* Text Content */}
+                <div className='space-y-6'>
+                    <p className='text-base md:text-lg leading-relaxed' style={{color: 'var(--text-primary)'}}>
+                        I'm somewhat of a hobby collector. I find myself picking up new skills and passions here and there, especially in tech, food, science, and sports.
+                    </p>
+                    
+                    <div className='space-y-5'>
+                        <h3 className='text-lg md:text-xl font-Ovo' style={{color: 'var(--text-primary)'}}>
+                            Lately I've been spending my time on:
+                        </h3>
+                        <ul className='space-y-4 pl-0'>
+                            <li className='flex gap-4'>
+                                <span className='text-lg font-Ovo mt-1' style={{color: 'var(--accent-primary)'}}>•</span>
+                                <div>
+                                    <span className='font-medium' style={{color: 'var(--text-primary)'}}>Leading in Tech:</span>
+                                    <span className='ml-2 text-base leading-relaxed' style={{color: 'var(--text-secondary)'}}>
+                                        Helping organize DeltaHacks as a VP and leading software development for McMaster's Quantum Key Distribution team
+                                    </span>
+                                </div>
+                            </li>
+                            <li className='flex gap-4'>
+                                <span className='text-lg font-Ovo mt-1' style={{color: 'var(--accent-primary)'}}>•</span>
+                                <div>
+                                    <span className='font-medium' style={{color: 'var(--text-primary)'}}>Eating My Way Around:</span>
+                                    <span className='ml-2 text-base leading-relaxed' style={{color: 'var(--text-secondary)'}}>
+                                        I'm always on the hunt for great tasting local food. My top picks so far are: Ramen/Udon, Korean BBQ, and Chipotle Burrito Bowls
+                                    </span>
+                                </div>
+                            </li>
+                            <li className='flex gap-4'>
+                                <span className='text-lg font-Ovo mt-1' style={{color: 'var(--accent-primary)'}}>•</span>
+                                <div>
+                                    <span className='font-medium' style={{color: 'var(--text-primary)'}}>Keeping Active:</span>
+                                    <span className='ml-2 text-base leading-relaxed' style={{color: 'var(--text-secondary)'}}>
+                                        You'll often find me playing a competitive game of badminton/ping pong with friends, or trying my best at rock climbing (I have a lot to work on strength-wise haha)
+                                    </span>
+                                </div>
+                            </li>
+                            <li className='flex gap-4'>
+                                <span className='text-lg font-Ovo mt-1' style={{color: 'var(--accent-primary)'}}>•</span>
+                                <div>
+                                    <span className='font-medium' style={{color: 'var(--text-primary)'}}>For Funsies:</span>
+                                    <span className='ml-2 text-base leading-relaxed' style={{color: 'var(--text-secondary)'}}>
+                                        I test out new photography techniques when inspiration strikes, and indulge in the occasional stargazing session
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 
                 {/* Photo Gallery Carousel */}
-                <div className="mt-8 w-full">
-                    <div className="relative w-full max-w-4xl mx-auto aspect-video rounded-lg overflow-hidden shadow-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
-                        <div className="relative w-full h-full"> {photos.map((photo, index) => (
-                                <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onMouseEnter={() => index === currentIndex && setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
-                                    <Image src={photo.src} alt={photo.caption} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px" />
-                                    <div className={`absolute bottom-0 left-0 right-0 p-4 transition-all duration-300 ${hoveredIndex === index && index === currentIndex ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white'}}>
+                <div className="mt-12 w-full">
+                    <div className="relative w-full max-w-4xl mx-auto aspect-video rounded-xl overflow-hidden shadow-lg" style={{backgroundColor: 'var(--bg-secondary)'}}>
+                        <div className="relative w-full h-full">
+                            {photos.map((photo, index) => (
+                                <div 
+                                    key={index} 
+                                    className={`absolute inset-0 transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} 
+                                    onMouseEnter={() => index === currentIndex && setHoveredIndex(index)} 
+                                    onMouseLeave={() => setHoveredIndex(null)}
+                                >
+                                    <Image 
+                                        src={photo.src} 
+                                        alt={photo.caption} 
+                                        fill 
+                                        className="object-cover" 
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px" 
+                                    />
+                                    <div 
+                                        className={`absolute bottom-0 left-0 right-0 p-4 transition-all duration-300 ${hoveredIndex === index && index === currentIndex ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} 
+                                        style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white'}}
+                                    >
                                         <p className="font-Ovo text-sm md:text-base">
                                             {photo.caption}
                                         </p>
