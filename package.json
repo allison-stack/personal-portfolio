@@ -6,13 +6,13 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "embed-qa": "node scripts/embed-qa.mjs"
   },
   "dependencies": {
-    "bootstrap": "^5.3.8",
+    "@google/generative-ai": "^0.24.1",
     "next": "15.5.9",
     "react": "19.1.0",
-    "react-bootstrap": "^2.10.10",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0"
   },
