@@ -22,14 +22,27 @@ function describe(ev) {
     case "PushEvent": {
       const commits = ev.payload?.commits ?? [];
       const last = commits[commits.length - 1];
-      if (!last) return null;
-      return {
-        kind: "push",
-        sha: short(last.sha),
-        text: last.message.split("\n")[0],
-        url: `https://github.com/${repo}/commit/${last.sha}`,
-        repo,
-      };
+      const head = ev.payload?.head;
+      const branch = (ev.payload?.ref ?? "").replace(/^refs\/heads\//, "");
+      if (last) {
+        return {
+          kind: "push",
+          sha: short(last.sha),
+          text: last.message.split("\n")[0],
+          url: `https://github.com/${repo}/commit/${last.sha}`,
+          repo,
+        };
+      }
+      if (head) {
+        return {
+          kind: "push",
+          sha: short(head),
+          text: branch ? `push to ${branch}` : `pushed to ${repo}`,
+          url: `https://github.com/${repo}/commit/${head}`,
+          repo,
+        };
+      }
+      return null;
     }
     case "PullRequestEvent": {
       const action = ev.payload?.action;
@@ -108,16 +121,27 @@ function describe(ev) {
   }
 }
 
+// Stay under GitHub's 60/hr unauthenticated limit even when the page is
+// hammered: throttle to one upstream call per minute. Within that window
+// all callers share the last fetched result.
+const MIN_INTERVAL_MS = 60_000;
+let lastFetchAt = 0;
+let lastResult = [];
+
 async function fetchActivity() {
+  const now = Date.now();
+  if (lastResult.length && now - lastFetchAt < MIN_INTERVAL_MS) {
+    return lastResult;
+  }
   try {
     const res = await fetch(
       `https://api.github.com/users/${links.github}/events/public?per_page=30`,
       {
-        next: { revalidate: 300 },
+        cache: "no-store",
         headers: { "User-Agent": "personal-portfolio" },
       }
     );
-    if (!res.ok) return [];
+    if (!res.ok) return lastResult;
     const events = await res.json();
     const parsed = [];
     const seen = new Set();
@@ -130,16 +154,18 @@ async function fetchActivity() {
       parsed.push({ ...d, when: ev.created_at });
       if (parsed.length >= MAX_EVENTS) break;
     }
+    lastFetchAt = now;
+    lastResult = parsed;
     return parsed;
   } catch {
-    return [];
+    return lastResult;
   }
 }
 
 export async function LatestPanel() {
   const events = await fetchActivity();
   return (
-    <Panel title="activity" hint="github · 5m cache" status="cached">
+    <Panel title="activity" hint="github · 1m" status="live">
       {events.length ? (
         <ul className="divide-y divide-[var(--color-border)]">
           {events.map((e, i) => (
