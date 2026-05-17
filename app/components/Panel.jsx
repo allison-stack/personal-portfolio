@@ -1,11 +1,13 @@
-export function Panel({ title, hint, children, className = "" }) {
+export function Panel({ title, hint, status, children, className = "" }) {
   return (
     <section className={`border hairline ${className}`}>
-      <div className="flex items-baseline justify-between border-b hairline px-3 py-1.5 text-[12px]">
-        <span className="muted">
-          <span className="accent">▸</span> {title}
+      <div className="flex items-baseline justify-between border-b dashline px-3 py-1.5">
+        <span className="kicker flex items-center gap-2">
+          {status === "live" && <span className="ok">●</span>}
+          {status === "cached" && <span className="muted">●</span>}
+          {title}
         </span>
-        {hint ? <span className="muted">{hint}</span> : null}
+        {hint ? <span className="label">{hint}</span> : null}
       </div>
       <div className="p-3 text-[13px]">{children}</div>
     </section>

@@ -61,41 +61,54 @@ export function AskBar({ onSubmit, disabled }) {
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-0 border-t hairline bg-[var(--color-bg)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--color-bg)]/80">
-      {showMenu && candidates.length > 0 && (
-        <ul className="max-w-3xl mx-auto px-4 sm:px-6 pt-2 text-[12px]">
-          {candidates.map((c, i) => (
-            <li
-              key={c.cmd}
-              onMouseDown={(e) => { e.preventDefault(); submit(c.cmd); }}
-              className={`flex justify-between px-2 py-0.5 cursor-pointer ${
-                i === menuIdx ? "accent" : "muted hover:strong"
-              }`}
-            >
-              <span>{c.cmd}</span>
-              <span className="muted">{c.desc}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      <form
-        onSubmit={(e) => { e.preventDefault(); submit(); }}
-        className="max-w-3xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-2"
-      >
-        <span className="accent shrink-0">›</span>
-        <input
-          ref={inputRef}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={handleKey}
-          disabled={disabled}
-          spellCheck={false}
-          autoComplete="off"
-          placeholder="ask anything · /help · ⌘K to focus"
-          className="flex-1 bg-transparent outline-none placeholder:text-[var(--color-muted)] strong disabled:opacity-50"
-        />
-        <span className="muted text-[11px] hidden sm:inline">enter</span>
-      </form>
+    <div className="fixed inset-x-0 bottom-0 z-30 border-t hairline bg-[var(--color-bg)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--color-bg)]/80">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3">
+        {showMenu && candidates.length > 0 && (
+          <ul className="mb-2 border dashline tinted-accent px-2 py-1 text-[12px]">
+            {candidates.map((c, i) => (
+              <li
+                key={c.cmd}
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  submit(c.cmd);
+                }}
+                className={`flex justify-between px-2 py-0.5 cursor-pointer ${
+                  i === menuIdx ? "accent" : "muted hover:strong"
+                }`}
+              >
+                <span>{c.cmd}</span>
+                <span className="muted">{c.desc}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            submit();
+          }}
+          className="border tinted-accent flex items-center gap-2 px-3 py-2"
+          style={{ borderColor: "var(--color-accent)" }}
+        >
+          <span className="accent shrink-0 tabular-nums">›</span>
+          <input
+            ref={inputRef}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={handleKey}
+            disabled={disabled}
+            spellCheck={false}
+            autoComplete="off"
+            placeholder="ask · /help · ⌘K"
+            className="flex-1 bg-transparent outline-none placeholder:text-[var(--color-muted)] strong disabled:opacity-50"
+          />
+          <span className="muted text-[11px] hidden sm:inline">↵ enter</span>
+        </form>
+        <div className="flex justify-between text-[10.5px] muted mt-1.5 px-1 tabular-nums">
+          <span>retrieval · embeddings · no llm</span>
+          <span className="hidden sm:inline">esc clears · ⌘K focuses · /help</span>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,10 +1,11 @@
-import { IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
+import { DM_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const plexMono = IBM_Plex_Mono({
+const dmMono = DM_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-plex-mono",
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  variable: "--font-dm-mono",
   display: "swap",
 });
 
@@ -24,7 +25,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${plexMono.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" className={`${dmMono.variable} ${instrumentSerif.variable}`}>
       <body>{children}</body>
     </html>
   );

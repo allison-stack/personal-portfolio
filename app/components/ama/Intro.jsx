@@ -10,7 +10,7 @@ export function Intro({ onPrompt }) {
 
   return (
     <div className="space-y-3">
-      <p className={`serif text-xl strong leading-snug ${done ? "" : "caret"}`}>
+      <p className={`serif text-[22px] sm:text-[24px] strong leading-snug ${done ? "" : "caret"}`}>
         {out}
       </p>
       {done && (
@@ -19,9 +19,9 @@ export function Intro({ onPrompt }) {
             <button
               key={p}
               onClick={() => onPrompt(p)}
-              className="border hairline px-2 py-1 text-[12px] muted hover:accent hover:border-[var(--color-accent)] transition-colors"
+              className="border dashline px-2 py-1 text-[12px] muted hover:strong hover:border-[var(--color-accent)] hover:tinted-accent transition-colors"
             >
-              {p}
+              <span className="muted">›</span> {p}
             </button>
           ))}
         </div>
