@@ -6,4 +6,5 @@ export const links = {
   resume: "/Allison-Zhao-Resume.pdf",
   location: "Toronto, ON",
   timezone: "America/Toronto",
+  leetcode: "allison_zz",
 };

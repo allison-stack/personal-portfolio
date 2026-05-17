@@ -40,6 +40,14 @@ export function TopBar() {
         <span className="hidden md:inline">{links.location}</span>
         <span className="hidden md:inline">·</span>
         <Clock />
+        <a
+          href={links.resume}
+          target="_blank"
+          rel="noreferrer"
+          className="border dashline tinted-accent px-2 py-0.5 accent hover:strong hover:border-[var(--color-accent)] transition-colors"
+        >
+          resume ↗
+        </a>
       </div>
     </header>
   );

@@ -1,10 +1,29 @@
 "use client";
+import { useEffect, useState } from "react";
 import { Panel } from "../Panel";
 import { now } from "../../content/now";
 import { useNow } from "../../hooks/useNow";
 
 export function NowPanel() {
   const { activity, hh, mm } = useNow();
+  const [track, setTrack] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/now-playing")
+      .then((r) => r.json())
+      .then((d) => {
+        if (!cancelled && d?.track) setTrack(d.track);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const trackText = track ? `${track.name} — ${track.artists}` : now.track;
+  const trackHref = track?.url ?? null;
+
   return (
     <Panel title="now" hint="local" status="live">
       <dl className="space-y-1.5">
@@ -17,8 +36,16 @@ export function NowPanel() {
           <dd className="strong tabular-nums">{hh}:{mm}</dd>
         </div>
         <div className="flex gap-3">
-          <dt className="muted w-20 shrink-0">track</dt>
-          <dd className="strong truncate">{now.track}</dd>
+          <dt className="muted w-20 shrink-0">top · 7d</dt>
+          <dd className="strong truncate">
+            {trackHref ? (
+              <a href={trackHref} target="_blank" rel="noreferrer" className="hover:accent">
+                {trackText} ↗
+              </a>
+            ) : (
+              trackText
+            )}
+          </dd>
         </div>
         <div className="flex gap-3">
           <dt className="muted w-20 shrink-0">reading</dt>
