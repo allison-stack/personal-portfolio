@@ -1,6 +1,5 @@
 import { Console } from "./components/Console";
 import { TopBar } from "./components/TopBar";
-import { Identity } from "./components/Identity";
 import { SystemFooter } from "./components/SystemFooter";
 import { Chat } from "./components/ama/Chat";
 import { NowPanel } from "./components/panels/NowPanel";
@@ -13,23 +12,20 @@ export default function Home() {
   return (
     <Console>
       <TopBar />
-      <main className="max-w-6xl w-full mx-auto px-4 sm:px-6 grid gap-4 lg:grid-cols-12">
-        <div className="lg:col-span-12">
-          <Identity />
+      <main className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4">
+        <div className="flex flex-col min-h-[60dvh] lg:h-[58dvh]">
+          <Chat />
         </div>
-        <div className="lg:col-span-8 flex flex-col gap-4">
-          <Chat index={0} />
-          <ProjectsPanel index={5} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <NowPanel index={0} />
+          <DayPanel index={1} />
+          <LeetcodePanel index={2} />
+          <LatestPanel index={3} />
+          <div className="lg:col-span-2">
+            <ProjectsPanel index={4} />
+          </div>
         </div>
-        <aside className="lg:col-span-4 flex flex-col gap-4">
-          <NowPanel index={1} />
-          <DayPanel index={2} />
-          <LeetcodePanel index={3} />
-          <LatestPanel index={4} />
-        </aside>
-        <div className="lg:col-span-12 pt-2 pb-4">
-          <SystemFooter />
-        </div>
+        <SystemFooter />
       </main>
     </Console>
   );
