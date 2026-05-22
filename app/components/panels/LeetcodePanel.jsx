@@ -5,7 +5,7 @@ import { leetcode } from "../../content/leetcode";
 
 const WEEKLY_GOAL = 5;
 
-export function LeetcodePanel() {
+export function LeetcodePanel({ index = 0 }) {
   const [live, setLive] = useState(null);
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export function LeetcodePanel() {
     <Panel
       title="leetcode"
       status={live ? "live" : "cached"}
+      index={index}
       hint={
         <a
           className="hover:strong"
@@ -41,7 +42,7 @@ export function LeetcodePanel() {
         </a>
       }
     >
-      <dl className="grid grid-cols-2 gap-y-1.5 gap-x-3 mb-3">
+      <dl key={live ? "live" : "cached"} className="grid grid-cols-2 gap-y-1.5 gap-x-3 mb-3 fade-in">
         <dt className="muted">solved</dt>
         <dd className="strong tabular-nums">{solved}</dd>
         <dt className="muted">streak</dt>

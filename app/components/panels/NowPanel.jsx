@@ -4,7 +4,7 @@ import { Panel } from "../Panel";
 import { now } from "../../content/now";
 import { useNow } from "../../hooks/useNow";
 
-export function NowPanel() {
+export function NowPanel({ index = 0 }) {
   const { activity, hh, mm } = useNow();
   const [track, setTrack] = useState(null);
 
@@ -25,7 +25,7 @@ export function NowPanel() {
   const trackHref = track?.url ?? null;
 
   return (
-    <Panel title="now" hint="local" status="live">
+    <Panel title="now" hint="local" status="live" index={index}>
       <dl className="space-y-1.5">
         <div className="flex gap-3">
           <dt className="muted w-20 shrink-0">activity</dt>
@@ -37,7 +37,7 @@ export function NowPanel() {
         </div>
         <div className="flex gap-3">
           <dt className="muted w-20 shrink-0">top · 7d</dt>
-          <dd className="strong truncate">
+          <dd key={track?.url ?? "fallback"} className="strong truncate fade-in">
             {trackHref ? (
               <a href={trackHref} target="_blank" rel="noreferrer" className="hover:accent">
                 {trackText} ↗

@@ -1,14 +1,28 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
+export function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const onChange = (e) => setReduced(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return reduced;
+}
+
 export function useTypewriter(text, { speed = 14, enabled = true } = {}) {
-  const [out, setOut] = useState(enabled ? "" : text);
-  const [done, setDone] = useState(!enabled);
+  const reduced = usePrefersReducedMotion();
+  const active = enabled && !reduced;
+  const [out, setOut] = useState(active ? "" : text);
+  const [done, setDone] = useState(!active);
   const idxRef = useRef(0);
 
   useEffect(() => {
     idxRef.current = 0;
-    if (!enabled || !text) {
+    if (!active || !text) {
       setOut(text || "");
       setDone(true);
       return;
@@ -26,7 +40,7 @@ export function useTypewriter(text, { speed = 14, enabled = true } = {}) {
       }
     }, speed);
     return () => clearInterval(id);
-  }, [text, speed, enabled]);
+  }, [text, speed, active]);
 
   return { out, done };
 }

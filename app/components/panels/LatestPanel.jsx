@@ -162,16 +162,17 @@ async function fetchActivity() {
   }
 }
 
-export async function LatestPanel() {
+export async function LatestPanel({ index = 0 }) {
   const events = await fetchActivity();
   return (
-    <Panel title="activity" hint="github · 1m" status="live">
+    <Panel title="activity" hint="github · 1m" status="live" index={index}>
       {events.length ? (
         <ul className="divide-y divide-[var(--color-border)]">
           {events.map((e, i) => (
             <li
               key={i}
-              className="grid grid-cols-[2.5rem_1fr_auto] gap-2 items-baseline py-1.5 first:pt-0 last:pb-0"
+              className="grid grid-cols-[2.5rem_1fr_auto] gap-2 items-baseline py-1.5 first:pt-0 last:pb-0 fade-in"
+              style={{ "--delay": `${i * 40}ms` }}
             >
               <span className="muted tabular-nums text-[11px]">{relative(e.when)}</span>
               <a

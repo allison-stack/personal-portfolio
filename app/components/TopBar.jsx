@@ -44,7 +44,8 @@ export function TopBar() {
           href={links.resume}
           target="_blank"
           rel="noreferrer"
-          className="border dashline tinted-accent px-2 py-0.5 accent hover:strong hover:border-[var(--color-accent)] transition-colors"
+          className="border dashline tinted-accent px-2 py-0.5 accent hover:strong hover:border-[var(--color-accent)]"
+          style={{ transition: "color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }}
         >
           resume ↗
         </a>

@@ -15,11 +15,20 @@ export function AskBar({ onSubmit, disabled }) {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         inputRef.current?.focus();
+        return;
+      }
+      if (e.key === "Escape") {
+        if (value.length > 0) {
+          e.preventDefault();
+          setValue("");
+        } else {
+          window.dispatchEvent(new CustomEvent("ama-clear"));
+        }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [value]);
 
   useEffect(() => { setMenuIdx(0); }, [value]);
 
@@ -64,7 +73,7 @@ export function AskBar({ onSubmit, disabled }) {
     <div className="fixed inset-x-0 bottom-0 z-30 border-t hairline bg-[var(--color-bg)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--color-bg)]/80">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3">
         {showMenu && candidates.length > 0 && (
-          <ul className="mb-2 border dashline tinted-accent px-2 py-1 text-[12px]">
+          <ul key={candidates.map((c) => c.cmd).join(",")} className="mb-2 border dashline tinted-accent px-2 py-1 text-[12px] fade-in">
             {candidates.map((c, i) => (
               <li
                 key={c.cmd}
@@ -87,7 +96,7 @@ export function AskBar({ onSubmit, disabled }) {
             e.preventDefault();
             submit();
           }}
-          className="border tinted-accent flex items-center gap-2 px-3 py-2"
+          className="ask-form border tinted-accent flex items-center gap-2 px-3 py-2"
           style={{ borderColor: "var(--color-accent)" }}
         >
           <span className="accent shrink-0 tabular-nums">›</span>

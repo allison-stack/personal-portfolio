@@ -15,11 +15,12 @@ export function Intro({ onPrompt }) {
       </p>
       {done && (
         <div className="flex flex-wrap gap-1.5 pt-1">
-          {suggestedPrompts.map((p) => (
+          {suggestedPrompts.map((p, i) => (
             <button
               key={p}
               onClick={() => onPrompt(p)}
-              className="border dashline px-2 py-1 text-[12px] muted hover:strong hover:border-[var(--color-accent)] hover:tinted-accent transition-colors"
+              className="border dashline px-2 py-1 text-[12px] muted hover:strong hover:border-[var(--color-accent)] hover:tinted-accent transition-colors fade-in"
+              style={{ "--delay": `${i * 50}ms` }}
             >
               <span className="muted">›</span> {p}
             </button>

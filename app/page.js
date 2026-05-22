@@ -18,14 +18,14 @@ export default function Home() {
           <Identity />
         </div>
         <div className="lg:col-span-8 flex flex-col gap-4">
-          <Chat />
-          <ProjectsPanel />
+          <Chat index={0} />
+          <ProjectsPanel index={5} />
         </div>
         <aside className="lg:col-span-4 flex flex-col gap-4">
-          <NowPanel />
-          <DayPanel />
-          <LeetcodePanel />
-          <LatestPanel />
+          <NowPanel index={1} />
+          <DayPanel index={2} />
+          <LeetcodePanel index={3} />
+          <LatestPanel index={4} />
         </aside>
         <div className="lg:col-span-12 pt-2 pb-4">
           <SystemFooter />

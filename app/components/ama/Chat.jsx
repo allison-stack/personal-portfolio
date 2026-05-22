@@ -9,7 +9,7 @@ import { isSlash, runSlash } from "../../lib/commands";
 let msgId = 0;
 const nextId = () => `m${++msgId}`;
 
-export function Chat() {
+export function Chat({ index = 0 }) {
   const [messages, setMessages] = useState([]);
   const [pending, setPending] = useState(false);
   const scrollRef = useRef(null);
@@ -17,6 +17,12 @@ export function Chat() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, pending]);
+
+  useEffect(() => {
+    const onClear = () => setMessages([]);
+    window.addEventListener("ama-clear", onClear);
+    return () => window.removeEventListener("ama-clear", onClear);
+  }, []);
 
   async function ask(text) {
     if (isSlash(text)) {
@@ -84,22 +90,24 @@ export function Chat() {
 
   return (
     <>
-      <Panel title="ama" hint="retrieval · not an llm" className="flex-1 flex flex-col">
+      <Panel title="ama" hint="retrieval · not an llm" className="flex-1 flex flex-col" index={index}>
         <div
           ref={scrollRef}
           className="space-y-4 max-h-[60dvh] sm:max-h-[55dvh] overflow-y-auto pr-1"
         >
           <Intro onPrompt={ask} />
-          {messages.map((m) =>
-            m.role === "user" ? (
-              <UserMessage key={m.id} text={m.text} />
-            ) : m.role === "system" ? (
-              <SystemMessage key={m.id} text={m.text} />
-            ) : (
-              <AssistantMessage key={m.id} text={m.text} />
-            )
-          )}
-          {pending && <div className="muted caret">thinking</div>}
+          {messages.map((m) => (
+            <div key={m.id} className="fade-in">
+              {m.role === "user" ? (
+                <UserMessage text={m.text} />
+              ) : m.role === "system" ? (
+                <SystemMessage text={m.text} />
+              ) : (
+                <AssistantMessage text={m.text} />
+              )}
+            </div>
+          ))}
+          {pending && <div className="muted caret fade-in">thinking</div>}
         </div>
       </Panel>
       <AskBar onSubmit={ask} disabled={pending} />
