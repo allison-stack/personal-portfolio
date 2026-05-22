@@ -1,10 +1,11 @@
 "use client";
 import { useTypewriter } from "../../hooks/useTypewriter";
+import { pretty } from "../../content/files";
 
-export function UserMessage({ text }) {
+export function UserMessage({ text, cwd = "/" }) {
   return (
     <div className="flex gap-2 items-baseline">
-      <span className="accent shrink-0">›</span>
+      <span className="accent shrink-0 tabular-nums whitespace-nowrap">{pretty(cwd)}$</span>
       <span className="strong whitespace-pre-wrap break-words">{text}</span>
     </div>
   );
