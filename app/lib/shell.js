@@ -326,9 +326,15 @@ export async function execute({ cmd, args, flags, raw }, cwd) {
       if (raw.startsWith("/")) {
         return { kind: "tool", name: cmd, args, body: `unknown command: ${cmd}. try /help.`, ok: false };
       }
-      const hint = suggest(cmd);
-      if (hint) {
-        return { kind: "tool", name: cmd, args, body: `command not found: ${cmd}. did you mean ${hint}?`, ok: false };
+      // Natural language gives itself away: spaces, punctuation, or any
+      // non-letter character. Only treat a bare single-word token as a
+      // possible typo'd command.
+      const isSingleWord = args.length === 0 && flags.length === 0 && /^[a-z][a-z0-9_-]*$/.test(cmd);
+      if (isSingleWord) {
+        const hint = suggest(cmd);
+        if (hint) {
+          return { kind: "tool", name: cmd, args, body: `command not found: ${cmd}. did you mean ${hint}?`, ok: false };
+        }
       }
       return { kind: "passthrough" };
     }
