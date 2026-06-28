@@ -12,11 +12,11 @@ export function ToolBlock({ name, args = [], body = "", ok = true }) {
   return (
     <div className="font-mono leading-snug fade-in">
       <div className="flex items-baseline gap-2">
-        <span className={ok ? "ok" : "err"}>●</span>
+        <span className={ok ? "ok" : "err"}>⏺</span>
         <span className="strong">{name}</span>
         <span className="muted">({argStr})</span>
       </div>
-      <div className="pl-4">
+      <div className="pl-[14px]">
         {head.length > 0 && (
           <div className="flex">
             <span className="muted shrink-0 pr-2 select-none">⎿</span>

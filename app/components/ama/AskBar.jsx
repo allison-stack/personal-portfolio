@@ -122,11 +122,9 @@ export function AskBar({ onSubmit, onAbort, disabled, cwd = "/", pending = false
     }
   }
 
-  const promptPrefix = `allison@portfolio:${pretty(cwd)}$`;
-
   return (
-    <div className="border-t hairline">
-      <div className="px-3 py-2">
+    <div>
+      <div className="px-3 pt-2 pb-1">
         {showMenu && (
           <ul className="mb-2 border dashline tinted-accent px-2 py-1 text-[12px] fade-in">
             {slashCandidates.map((c, i) => (
@@ -152,10 +150,9 @@ export function AskBar({ onSubmit, onAbort, disabled, cwd = "/", pending = false
         )}
         <form
           onSubmit={(e) => { e.preventDefault(); submit(); }}
-          className="ask-form flex items-baseline gap-2"
+          className="tui-box flex items-baseline gap-2"
         >
-          <span className="accent shrink-0 tabular-nums hidden sm:inline whitespace-nowrap">{promptPrefix}</span>
-          <span className="accent shrink-0 tabular-nums sm:hidden">$</span>
+          <span className="accent shrink-0 font-semibold select-none">&gt;</span>
           <input
             ref={inputRef}
             value={value}
@@ -164,14 +161,14 @@ export function AskBar({ onSubmit, onAbort, disabled, cwd = "/", pending = false
             disabled={disabled}
             spellCheck={false}
             autoComplete="off"
-            placeholder={pending ? "thinking… (ctrl+c to interrupt)" : "type a command or ask anything"}
+            placeholder={pending ? "Crafting… (ctrl+c to interrupt)" : "type a command or ask anything"}
             className="flex-1 min-w-0 bg-transparent outline-none placeholder:text-[var(--color-muted)] strong disabled:opacity-50"
           />
         </form>
       </div>
-      <div className="flex justify-between text-[10.5px] muted px-3 pb-1.5 tabular-nums border-t dashline pt-1">
-        <span>{pretty(cwd)} · {pending ? "ctrl+c interrupt" : "tab complete · ↑↓ history"}</span>
-        <span className="hidden sm:inline">esc clears · ⌘K focuses · /help</span>
+      <div className="flex justify-between text-[10.5px] muted px-3 pb-1.5 tabular-nums pt-1">
+        <span>cwd <span className="strong">{pretty(cwd)}</span> · {pending ? "ctrl+c interrupt" : "tab complete · ↑↓ history · esc clears · ⌘K focus"}</span>
+        <span className="hidden sm:inline">? for shortcuts</span>
       </div>
     </div>
   );

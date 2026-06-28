@@ -10,6 +10,21 @@ import * as history from "../../lib/history";
 let msgId = 0;
 const nextId = () => `m${++msgId}`;
 
+const SPARKLE_FRAMES = ["✻", "✦", "✧", "✦"];
+function Spinner() {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setI((n) => (n + 1) % SPARKLE_FRAMES.length), 140);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="fade-in flex items-baseline gap-2">
+      <span className="accent" style={{ width: "1ch", display: "inline-block" }}>{SPARKLE_FRAMES[i]}</span>
+      <span className="muted">Crafting… <span className="text-[11px]">(ctrl+c to interrupt)</span></span>
+    </div>
+  );
+}
+
 export function Chat() {
   const [messages, setMessages] = useState([]);
   const [pending, setPending] = useState(false);
@@ -136,7 +151,7 @@ export function Chat() {
             )}
           </div>
         ))}
-        {pending && <div className="muted caret fade-in">thinking</div>}
+        {pending && <Spinner />}
       </div>
       <AskBar onSubmit={ask} onAbort={abort} disabled={false} pending={pending} cwd={cwd} />
     </section>
