@@ -1,22 +1,21 @@
-import { fetchTopTrack } from "../../lib/lastfm";
+import { fetchNowPlaying } from "../../lib/lastfm";
 
 export const runtime = "edge";
-export const revalidate = 1800;
 
 export async function GET() {
   try {
-    const track = await fetchTopTrack({ period: "7day" });
+    const { isPlaying, track } = await fetchNowPlaying();
     return Response.json(
-      { track },
+      { isPlaying, track },
       {
         headers: {
-          "Cache-Control": "s-maxage=1800, stale-while-revalidate=3600",
+          "Cache-Control": "s-maxage=30, stale-while-revalidate=60",
         },
       }
     );
   } catch (err) {
     return Response.json(
-      { track: null, error: String(err?.message ?? err) },
+      { isPlaying: false, track: null, error: String(err?.message ?? err) },
       { status: 200 }
     );
   }
