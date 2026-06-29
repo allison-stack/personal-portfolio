@@ -18,7 +18,7 @@ export default function Home() {
               hi, i&rsquo;m <span className="nm">allison</span>.
             </h1>
             <p className="lede">
-              a software engineer based in Toronto. i spend most of my time thinking about databases and distributed systems, making sure things work and keep working. here's my{" "}
+              a software engineer based in Toronto. i spend most of my time thinking about databases and distributed systems, making sure things work and keep working. here&apos;s my{" "}
               <a className="ul" href="/Allison-Zhao-Resume.pdf">
                 resume
               </a>
@@ -36,7 +36,7 @@ export default function Home() {
               <div className="photo-img">
                 your<br />photo
               </div>
-              <div className="photo-cap">that's me!</div>
+              <div className="photo-cap">that&apos;s me!</div>
             </div>
             <div className="stamp">
               <b>TORONTO</b>
@@ -56,10 +56,10 @@ export default function Home() {
         <div className="sec">
           <h2 className="sh">about</h2>
           <p className="p">
-            i've been getting into talking to people about what's annoying them and then building something to fix it. at huawei i did that: i kept noticing teammates doing the same tedious stuff over and over, so i talked to them about what was slowing them down and wrote custom claude skills that actually got adopted. turns out the best tools come from just listening.
+            i&apos;ve been getting into talking to people about what&apos;s annoying them and then building something to fix it. at huawei i did that: i kept noticing teammates doing the same tedious stuff over and over, so i talked to them about what was slowing them down and wrote custom claude skills that actually got adopted. turns out the best tools come from just listening.
           </p>
           <p className="p">
-             a lot of my work lives behind the scenes: distributed systems, CI/CD pipelines, the kind of stuff you only notice when it breaks. i'm into databases, reliability, and figuring out why things break before they do. things move fast in this space and i like keeping up.
+             a lot of my work lives behind the scenes: distributed systems, CI/CD pipelines, the kind of stuff you only notice when it breaks. i&apos;m into databases, reliability, and figuring out why things break before they do. things move fast in this space and i like keeping up.
           </p>
           <p className="p">
             hobbies: rock climbing, badminton, ping pong, eating, touching grass, learning how to make the most use of my claude code tokens
@@ -121,6 +121,11 @@ export default function Home() {
         <div className="sec">
           <h2 className="sh">projects</h2>
           <ProjectRow
+            name="ForgeLab"
+            href="https://github.com/allison-stack/ForgeLab"
+            desc="— a local-first multi-agent software engineering team powered by LangGraph and Ollama"
+          />
+          <ProjectRow
             name="leet-buddy"
             href="https://github.com/allison-stack/leet-buddy"
             desc="— a little helper for your leetcode practice"
@@ -128,7 +133,7 @@ export default function Home() {
           <ProjectRow
             name="custom opencode skills"
             href=""
-            desc="— skills that automate certain tasks part of Huawei's distributed scheduling and data engine team"
+            desc="— skills that automate certain tasks part of Huawei&apos;s distributed scheduling and data engine team"
           />
         </div>
 
