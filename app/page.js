@@ -34,7 +34,7 @@ export default function Home() {
             <div className="photo">
               <div className="tape" />
               <div className="photo-img">
-                your<br />photo
+                <img src="/profile-photo.jpg" alt="me!" />
               </div>
               <div className="photo-cap">that&apos;s me!</div>
             </div>
