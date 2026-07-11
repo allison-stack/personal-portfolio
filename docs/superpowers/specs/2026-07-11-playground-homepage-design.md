@@ -1,7 +1,8 @@
 # Playground Homepage — Design Spec
 
 **Date:** 2026-07-11
-**Status:** approved in brainstorming, pending spec review
+**Status:** approved (spec + wireframe)
+**Wireframe:** https://claude.ai/code/artifact/656f67c9-96fb-420c-a402-3e1f32163347
 
 ## Goal
 
