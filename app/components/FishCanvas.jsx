@@ -77,7 +77,11 @@ export function FishCanvas() {
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     window.addEventListener("pointerdown", onPointerMove, { passive: true });
     document.documentElement.addEventListener("mouseleave", onPointerGone);
-    window.addEventListener("resize", resize);
+    function onResize() {
+      resize();
+      if (reduced) draw();
+    }
+    window.addEventListener("resize", onResize);
 
     if (reduced) {
       // settle into a school, then hold a single static frame
@@ -94,7 +98,7 @@ export function FishCanvas() {
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerdown", onPointerMove);
       document.documentElement.removeEventListener("mouseleave", onPointerGone);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
