@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Clock } from "../components/Clock";
 import { NowPlaying } from "../components/NowPlaying";
 
@@ -33,7 +34,7 @@ export default function About() {
               <Clock /> in Toronto · <NowPlaying />
             </div>
             <p className="p" style={{ marginTop: 10 }}>
-              <a className="ul" href="/">→ come play</a>
+              <Link className="ul" href="/">→ come play</Link>
             </p>
           </div>
 
