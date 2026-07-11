@@ -33,7 +33,6 @@ export default function About() {
               <Clock /> in Toronto · <NowPlaying />
             </div>
             <p className="p" style={{ marginTop: 10 }}>
-              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
               <a className="ul" href="/">→ come play</a>
             </p>
           </div>
@@ -157,13 +156,11 @@ export default function About() {
               . i&rsquo;m also around on{" "}
               <a className="ul" href="https://www.linkedin.com/in/allisonzzhao/">
                 LinkedIn
-              </a>
-              {" "}
+              </a>{" "}
               and{" "}
               <a className="ul" href="https://github.com/allison-stack">
                 GitHub
-              </a>
-              {" "}
+              </a>{" "}
               — always down to chat about infra, databases, or whatever
               you&rsquo;re building.
             </p>
