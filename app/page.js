@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FishCanvas } from "./components/FishCanvas";
+import { Combiner } from "./components/Combiner";
 
 export default function Home() {
   return (
@@ -21,7 +22,14 @@ export default function Home() {
             </p>
           </section>
 
-          {/* combiner section arrives in Task 7 */}
+          <section className="pg-card">
+            <h2 className="sh">the fact lab</h2>
+            <p className="p">
+              combine two elements. every discovery comes with a real fun fact
+              — there&apos;s a lot to find.
+            </p>
+            <Combiner />
+          </section>
 
           <footer className="pg-card pg-foot">
             <p className="p">
