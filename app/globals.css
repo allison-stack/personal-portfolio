@@ -498,3 +498,58 @@ a:focus-visible {
   outline: 1px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* ---------- playground (/) ---------- */
+.fish-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.pg {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+.pg-col {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 22vh 24px 26vh;
+  display: flex;
+  flex-direction: column;
+  gap: 42vh;
+}
+.pg-card {
+  background: rgba(249, 245, 238, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 26px 28px;
+  box-shadow: 0 2px 14px rgba(34, 29, 22, 0.05);
+}
+.pg-links {
+  font-family: var(--f-mono);
+  font-size: 13px;
+}
+.pg-foot {
+  text-align: center;
+}
+.feed-toggle {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 2;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--muted);
+  background: rgba(249, 245, 238, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 13px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.feed-toggle:hover,
+.feed-toggle[aria-pressed="true"] {
+  color: var(--accent);
+  border-color: var(--accent);
+}
