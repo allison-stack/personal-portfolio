@@ -37,4 +37,12 @@ describe("combos.json", () => {
       expect(known.has(b), `unreachable input "${b}" in ${key}`).toBe(true);
     }
   });
+
+  it("contains self-combinations, which the UI must allow (tap same chip twice / drop onto itself)", () => {
+    const selfCombos = Object.keys(seeds).filter((key) => {
+      const [a, b] = key.split("+");
+      return a === b;
+    });
+    expect(selfCombos.length).toBeGreaterThanOrEqual(10);
+  });
 });

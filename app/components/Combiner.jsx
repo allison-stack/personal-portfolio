@@ -20,7 +20,11 @@ export function Combiner() {
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(STORE_KEY) ?? "null");
-      if (Array.isArray(saved) && saved.length >= SEED_ELEMENTS.length) {
+      if (
+        Array.isArray(saved) &&
+        saved.length >= SEED_ELEMENTS.length &&
+        saved.every((e) => e && typeof e.name === "string" && typeof e.emoji === "string")
+      ) {
         setElements(saved);
       }
     } catch {
@@ -70,6 +74,10 @@ export function Combiner() {
 
   function tapChip(name) {
     if (busy) return;
+    if (selected.length === 1 && selected[0] === name) {
+      combine(name, name);
+      return;
+    }
     if (selected.includes(name)) {
       setSelected(selected.filter((n) => n !== name));
       return;
@@ -81,12 +89,11 @@ export function Combiner() {
 
   return (
     <div className="cmb">
-      <div className="cmb-tray" role="list">
+      <div className="cmb-tray">
         {elements.map((el) => (
           <button
             key={el.name}
             type="button"
-            role="listitem"
             className={
               "cmb-chip" +
               (selected.includes(el.name) ? " is-selected" : "") +
@@ -102,7 +109,7 @@ export function Combiner() {
               e.preventDefault();
               const from = dragFrom.current;
               dragFrom.current = null;
-              if (from && from !== el.name) combine(from, el.name);
+              if (from) combine(from, el.name);
             }}
           >
             <span aria-hidden="true">{el.emoji}</span> {el.name}
@@ -114,7 +121,7 @@ export function Combiner() {
         {busy && <p className="cmb-hint">combining…</p>}
         {!busy && !last && (
           <p className="cmb-hint">
-            pick two elements (tap them, or drag one onto another)
+            pick two elements (tap them, or drag one onto another — the same one twice works too)
           </p>
         )}
         {!busy && last && !last.combo && (
