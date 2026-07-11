@@ -39,6 +39,7 @@ async function askGemini(a, b, apiKey) {
         responseMimeType: "application/json",
         temperature: 0.9,
         maxOutputTokens: 200,
+        thinkingConfig: { thinkingBudget: 0 },
       },
     }),
   });

@@ -14,9 +14,11 @@ combos (seed combos are hand-curated in `app/content/combos.json`)
 
 ## develop
 
+```bash
 npm run dev     # local dev
 npm test        # vitest (boids math, combine logic, seed graph)
 npm run build   # production build
+```
 
 needs `GEMINI_API_KEY` in `.env.local` for the AMA + novel combos; without it,
 seed combos still work.
