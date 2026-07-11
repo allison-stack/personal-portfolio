@@ -70,15 +70,13 @@ export function Combiner() {
 
   function tapChip(name) {
     if (busy) return;
-    setSelected((prev) => {
-      if (prev.includes(name)) return prev.filter((n) => n !== name);
-      const next = [...prev, name];
-      if (next.length === 2) {
-        combine(next[0], next[1]);
-        return next;
-      }
-      return next;
-    });
+    if (selected.includes(name)) {
+      setSelected(selected.filter((n) => n !== name));
+      return;
+    }
+    const next = [...selected, name];
+    setSelected(next);
+    if (next.length === 2) combine(next[0], next[1]);
   }
 
   return (
@@ -99,6 +97,7 @@ export function Combiner() {
             onClick={() => tapChip(el.name)}
             onDragStart={() => { dragFrom.current = el.name; }}
             onDragOver={(e) => e.preventDefault()}
+            onDragEnd={() => { dragFrom.current = null; }}
             onDrop={(e) => {
               e.preventDefault();
               const from = dragFrom.current;
