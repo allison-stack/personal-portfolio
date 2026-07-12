@@ -23,3 +23,4 @@
 ## Re-quiz queue
 | Concept | Missed on | Next review | Passes |
 |---|---|---|---|
+| All-pairs O(n²) cost vs spatial hash (why 120 fish = ~14k pair checks, not 120) | 2026-07-11 | 2026-07-12 | 0/3 |
