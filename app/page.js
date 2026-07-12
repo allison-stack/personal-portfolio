@@ -1,6 +1,17 @@
 import Link from "next/link";
 import { FishCanvas } from "./components/FishCanvas";
 import { Combiner } from "./components/Combiner";
+import { scraps } from "./content/scraps";
+
+function Scrap({ text, fact, side }) {
+  return (
+    <div className={`scrap scrap-${side}`}>
+      <span className="scrap-tape" aria-hidden="true" />
+      <p className="scrap-text">{text}</p>
+      {fact && <p className="scrap-fact">{fact}</p>}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -22,6 +33,13 @@ export default function Home() {
             </p>
           </section>
 
+          <div className="pg-gap">
+            <div className="glass-sign">🐟 do not tap the glass</div>
+            {scraps.slice(0, 3).map((s) => (
+              <Scrap key={s.id} {...s} />
+            ))}
+          </div>
+
           <section className="pg-card">
             <h2 className="sh">the fact lab</h2>
             <p className="p">
@@ -31,12 +49,22 @@ export default function Home() {
             <Combiner />
           </section>
 
+          <div className="pg-gap">
+            {scraps.slice(3).map((s) => (
+              <Scrap key={s.id} {...s} />
+            ))}
+          </div>
+
           <footer className="pg-card pg-foot">
             <p className="p">
               thanks for playing <span className="star">✦</span> ·{" "}
               <Link className="ul" href="/about">who made this? → about me</Link>
             </p>
           </footer>
+
+          <p className="koi-note">
+            one of the 120 fish is gold. finding it is good luck.
+          </p>
         </main>
       </div>
     </>
