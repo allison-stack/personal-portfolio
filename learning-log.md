@@ -18,6 +18,7 @@
 | Date | Decision | Her pick | Verdict |
 |---|---|---|---|
 | 2026-07-11 | Playground architecture (living page vs exhibits vs one-screen) | A: one living page, fixed canvas behind scroll | Agreed — ambient layer makes the fish the connective tissue, and new sections join the same scroll |
+| 2026-07-12 | How do taps/cat-swipes coexist with the mouse predator? | A: predator list with TTLs | Agreed — generalize an interface when the second consumer appears; B special-cases, C re-implements physics per scare type |
 | 2026-07-11 | Combiner mechanic | New element + fun fact per discovery | Agreed — the fact payout is what makes it hers, not an Infinite Craft clone |
 | 2026-07-11 | Old homepage | Move intact to /about | Agreed — recruiters lose nothing, playground stays uncompromised |
 
