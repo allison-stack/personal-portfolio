@@ -103,22 +103,65 @@ export function FishCanvas() {
         ctx.strokeStyle = goldColor;
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        ctx.arc(g.x, g.y, 14, 0, Math.PI * 2);
+        ctx.arc(g.x, g.y, 18, 0, Math.PI * 2);
         ctx.stroke();
         ctx.lineWidth = 2.2;
       }
 
-      ctx.globalAlpha = baseAlpha;
       for (let i = 0; i < fish.length; i++) {
         const f = fish[i];
         const sp = Math.hypot(f.vx, f.vy) || 0.001;
+        // local frame: u = forward, p = perpendicular; all offsets mix the two
         const ux = f.vx / sp;
         const uy = f.vy / sp;
-        ctx.strokeStyle = i === GOLD_INDEX ? goldColor : i % 9 === 0 ? koiColor : inkColor;
+        const px = -uy;
+        const py = ux;
+        const gold = i === GOLD_INDEX;
+        const koi = !gold && i % 9 === 0;
+        const s = gold ? 1.5 : koi ? 1.15 : 1;
+        const color = gold ? goldColor : koi ? koiColor : inkColor;
+        const wig = Math.sin(now / 140 + i * 1.7) * 1.4;
+
+        ctx.globalAlpha = gold ? Math.min(baseAlpha + 0.15, 0.8) : baseAlpha;
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = gold ? 1.4 : 1.1;
+
+        // body: almond silhouette, nose to rear
+        const nx = f.x + ux * 5 * s;
+        const ny = f.y + uy * 5 * s;
+        const rx = f.x - ux * 3.4 * s;
+        const ry = f.y - uy * 3.4 * s;
         ctx.beginPath();
-        ctx.moveTo(f.x + ux * 4, f.y + uy * 4);
-        ctx.lineTo(f.x - ux * 4, f.y - uy * 4);
+        ctx.moveTo(nx, ny);
+        ctx.quadraticCurveTo(f.x + px * 2.3 * s, f.y + py * 2.3 * s, rx, ry);
+        ctx.quadraticCurveTo(f.x - px * 2.3 * s, f.y - py * 2.3 * s, nx, ny);
+        ctx.fill();
+
+        // tail: forked, flicking; the koi's flows longer
+        const tl = (gold ? 6.5 : 3.6) * s;
+        const spread = 2 * s;
+        ctx.beginPath();
+        ctx.moveTo(rx, ry);
+        ctx.lineTo(rx - ux * tl + px * (spread + wig * 0.5), ry - uy * tl + py * (spread + wig * 0.5));
+        ctx.moveTo(rx, ry);
+        ctx.lineTo(rx - ux * tl - px * (spread - wig * 0.5), ry - uy * tl - py * (spread - wig * 0.5));
         ctx.stroke();
+
+        if (gold) {
+          // koi extras: terracotta patch + pectoral fins
+          ctx.fillStyle = koiColor;
+          ctx.beginPath();
+          ctx.arc(f.x + ux * 1.5 + px * 0.7, f.y + uy * 1.5 + py * 0.7, 1.4, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(f.x + px * 2.2, f.y + py * 2.2);
+          ctx.lineTo(f.x + px * 4 - ux * 1.4, f.y + py * 4 - uy * 1.4);
+          ctx.moveTo(f.x - px * 2.2, f.y - py * 2.2);
+          ctx.lineTo(f.x - px * 4 - ux * 1.4, f.y - py * 4 - uy * 1.4);
+          ctx.strokeStyle = goldColor;
+          ctx.stroke();
+        }
       }
 
       // ripples: two expanding rings fading over 700ms
