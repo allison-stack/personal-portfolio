@@ -12,6 +12,7 @@
 | 2026-07-11 | Gemini 2.5 thinking tokens count against maxOutputTokens | /api/combine — 200-token cap would be eaten by default thinking; thinkingBudget: 0 |
 | 2026-07-11 | Data-level tests can't catch interaction-level bugs | reachability test passed while the UI made 30/41 combos unreachable (self-combos blocked by tap-toggle + drag guard) |
 | 2026-07-11 | Canvas resize clears the bitmap | FishCanvas reduced-motion path went blank on window resize until redraw added |
+| 2026-07-12 | Canvas CSS size vs bitmap size are independent (replaced elements don't stretch from inset:0) | fish only fled at tab edges — element rendered at dpr×viewport, so sim/mouse coords were misaligned 2:1; fix = width/height 100% |
 
 ## Predictions
 | Date | Decision | Her pick | Verdict |
