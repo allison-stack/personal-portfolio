@@ -29,7 +29,7 @@ export function createFish(count, w, h, rand = Math.random) {
   return fish;
 }
 
-export function stepSchool(fish, { w, h, predator, mode = "flee", params, rand = Math.random }) {
+export function stepSchool(fish, { w, h, predators = [], params, rand = Math.random }) {
   const p = { ...DEFAULTS, ...params };
   const cell = p.perception;
 
@@ -78,18 +78,20 @@ export function stepSchool(fish, { w, h, predator, mode = "flee", params, rand =
       ay += (avy / n - f.vy) * p.alignForce;
     }
 
-    if (predator?.active) {
-      const px = f.x - predator.x;
-      const py = f.y - predator.y;
+    for (const pr of predators) {
+      if (!pr || pr.active === false) continue;
+      const px = f.x - pr.x;
+      const py = f.y - pr.y;
       const pd2 = px * px + py * py;
       if (pd2 < p.fleeRadius * p.fleeRadius && pd2 > 0.0001) {
         const pd = Math.sqrt(pd2);
-        if (mode === "feed") {
-          const pull = p.feedForce * (1 - pd / p.fleeRadius);
+        const strength = pr.strength ?? 1;
+        if (pr.kind === "feed") {
+          const pull = p.feedForce * strength * (1 - pd / p.fleeRadius);
           ax -= (px / pd) * pull;
           ay -= (py / pd) * pull;
         } else {
-          const push = p.fleeForce * (1 - pd / p.fleeRadius);
+          const push = p.fleeForce * strength * (1 - pd / p.fleeRadius);
           ax += (px / pd) * push;
           ay += (py / pd) * push;
         }
