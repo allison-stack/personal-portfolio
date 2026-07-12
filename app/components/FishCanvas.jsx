@@ -124,43 +124,43 @@ export function FishCanvas() {
 
         ctx.globalAlpha = gold ? Math.min(baseAlpha + 0.15, 0.8) : baseAlpha;
         ctx.fillStyle = color;
-        ctx.strokeStyle = color;
-        ctx.lineWidth = gold ? 1.4 : 1.1;
 
-        // body: almond silhouette, nose to rear
-        const nx = f.x + ux * 5 * s;
-        const ny = f.y + uy * 5 * s;
-        const rx = f.x - ux * 3.4 * s;
-        const ry = f.y - uy * 3.4 * s;
+        // body: plain oval, rotated to the swim direction
+        const bl = 5.2 * s; // half-length
+        const bw = 2.6 * s; // half-width
+        const ang = Math.atan2(uy, ux);
         ctx.beginPath();
-        ctx.moveTo(nx, ny);
-        ctx.quadraticCurveTo(f.x + px * 2.3 * s, f.y + py * 2.3 * s, rx, ry);
-        ctx.quadraticCurveTo(f.x - px * 2.3 * s, f.y - py * 2.3 * s, nx, ny);
+        ctx.ellipse(f.x, f.y, bl, bw, ang, 0, Math.PI * 2);
         ctx.fill();
 
-        // tail: forked, flicking; the koi's flows longer
-        const tl = (gold ? 6.5 : 3.6) * s;
-        const spread = 2 * s;
+        // tail: filled triangle hinged at the rear, flicking
+        const rx = f.x - ux * bl * 0.9;
+        const ry = f.y - uy * bl * 0.9;
+        const tl = (gold ? 7 : 4.4) * s;
+        const tw = (gold ? 3.2 : 2.3) * s;
+        const wob = wig * 0.5;
         ctx.beginPath();
         ctx.moveTo(rx, ry);
-        ctx.lineTo(rx - ux * tl + px * (spread + wig * 0.5), ry - uy * tl + py * (spread + wig * 0.5));
-        ctx.moveTo(rx, ry);
-        ctx.lineTo(rx - ux * tl - px * (spread - wig * 0.5), ry - uy * tl - py * (spread - wig * 0.5));
-        ctx.stroke();
+        ctx.lineTo(rx - ux * tl + px * (tw + wob), ry - uy * tl + py * (tw + wob));
+        ctx.lineTo(rx - ux * tl - px * (tw - wob), ry - uy * tl - py * (tw - wob));
+        ctx.closePath();
+        ctx.fill();
 
         if (gold) {
-          // koi extras: terracotta patch + pectoral fins
+          // fancy fan tail: a second, offset triangle at lower alpha
+          ctx.globalAlpha = baseAlpha * 0.6;
+          ctx.beginPath();
+          ctx.moveTo(rx, ry);
+          ctx.lineTo(rx - ux * tl * 1.25 + px * (tw - wob), ry - uy * tl * 1.25 + py * (tw - wob));
+          ctx.lineTo(rx - ux * tl * 1.25 - px * (tw + wob), ry - uy * tl * 1.25 - py * (tw + wob));
+          ctx.closePath();
+          ctx.fill();
+          // terracotta patch
+          ctx.globalAlpha = Math.min(baseAlpha + 0.15, 0.8);
           ctx.fillStyle = koiColor;
           ctx.beginPath();
-          ctx.arc(f.x + ux * 1.5 + px * 0.7, f.y + uy * 1.5 + py * 0.7, 1.4, 0, Math.PI * 2);
+          ctx.arc(f.x + ux * 1.5 + px * 0.8, f.y + uy * 1.5 + py * 0.8, 1.6, 0, Math.PI * 2);
           ctx.fill();
-          ctx.beginPath();
-          ctx.moveTo(f.x + px * 2.2, f.y + py * 2.2);
-          ctx.lineTo(f.x + px * 4 - ux * 1.4, f.y + py * 4 - uy * 1.4);
-          ctx.moveTo(f.x - px * 2.2, f.y - py * 2.2);
-          ctx.lineTo(f.x - px * 4 - ux * 1.4, f.y - py * 4 - uy * 1.4);
-          ctx.strokeStyle = goldColor;
-          ctx.stroke();
         }
       }
 
