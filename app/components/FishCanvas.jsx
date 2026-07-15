@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createFish, stepSchool } from "../lib/boids";
 import { fortuneForDate } from "../lib/fortune";
+import { readFishColors } from "../lib/fish-colors";
 
 const COUNT = 120;
 const GOLD_INDEX = 0; // the lucky one
@@ -12,40 +13,27 @@ const BUS_CROSS_MS = 8000;
 const BUBBLE_EVERY_MS = [120000, 180000]; // 2–3 min
 const NIGHT_PARAMS = { maxSpeed: 1.4, wander: 0.06 };
 
-function torontoHour() {
-  return Number(
-    new Intl.DateTimeFormat("en-CA", {
-      hour: "numeric",
-      hour12: false,
-      timeZone: "America/Toronto",
-    }).format(new Date())
-  );
-}
-
-function isNightHour(h) {
-  return h >= 23 || h < 7;
-}
-
-export function FishCanvas() {
+export function FishCanvas({ night = false }) {
   const canvasRef = useRef(null);
   const [feeding, setFeeding] = useState(false);
-  const [night, setNight] = useState(false);
   const modeRef = useRef("flee");
 
   useEffect(() => {
     modeRef.current = feeding ? "feed" : "flee";
   }, [feeding]);
 
-  useEffect(() => {
-    const check = () => setNight(isNightHour(torontoHour()));
-    check();
-    const id = setInterval(check, 60 * 60 * 1000);
-    return () => clearInterval(id);
-  }, []);
-
   const nightRef = useRef(false);
   useEffect(() => {
     nightRef.current = night;
+  }, [night]);
+
+  // colors come from the .pond theme tokens on an ancestor, so read them from
+  // the canvas itself — documentElement never sees the scoped overrides.
+  // re-read on night flips: PondTheme swaps the class in the same commit.
+  const colorsRef = useRef(readFishColors(() => ""));
+  useEffect(() => {
+    const styles = getComputedStyle(canvasRef.current);
+    colorsRef.current = readFishColors((name) => styles.getPropertyValue(name));
   }, [night]);
 
   useEffect(() => {
@@ -64,12 +52,6 @@ export function FishCanvas() {
     let W = 0;
     let H = 0;
     let raf = 0;
-
-    const styles = getComputedStyle(document.documentElement);
-    const inkColor = styles.getPropertyValue("--muted").trim() || "#928979";
-    const koiColor = styles.getPropertyValue("--accent").trim() || "#a65f3c";
-    const handFont = styles.getPropertyValue("--f-hand").trim() || "cursive";
-    const goldColor = "#c9950c";
 
     function resize() {
       W = window.innerWidth;
@@ -91,6 +73,7 @@ export function FishCanvas() {
     }
 
     function draw(now) {
+      const C = colorsRef.current;
       ctx.clearRect(0, 0, W, H);
       ctx.lineWidth = 2.2;
       ctx.lineCap = "round";
@@ -100,7 +83,7 @@ export function FishCanvas() {
       if (now < koiGlintUntil) {
         const g = fish[GOLD_INDEX];
         ctx.globalAlpha = 0.5 * ((koiGlintUntil - now) / KOI_GLINT_MS);
-        ctx.strokeStyle = goldColor;
+        ctx.strokeStyle = C.gold;
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.arc(g.x, g.y, 18, 0, Math.PI * 2);
@@ -119,16 +102,37 @@ export function FishCanvas() {
         const gold = i === GOLD_INDEX;
         const koi = !gold && i % 9 === 0;
         const s = gold ? 1.5 : koi ? 1.15 : 1;
-        const color = gold ? goldColor : koi ? koiColor : inkColor;
+        const color = gold ? C.gold : koi ? C.koi : C.ink;
         const wig = Math.sin(now / 140 + i * 1.7) * 1.4;
+
+        const bl = 5.2 * s; // half-length
+        const bw = 2.6 * s; // half-width
+        const ang = Math.atan2(uy, ux);
+
+        // top-down depth: a small offset shadow by day, a glow halo for
+        // koi/gold by night (shadows read wrong on dark water)
+        if (!nightRef.current) {
+          ctx.globalAlpha = 0.12;
+          ctx.fillStyle = "#123a3e";
+          ctx.beginPath();
+          ctx.ellipse(f.x + 2, f.y + 4, bl * 0.9, bw * 0.85, ang, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (gold || koi) {
+          const gr = gold ? 16 : 10;
+          const halo = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, gr);
+          halo.addColorStop(0, "rgba(232, 161, 61, 0.3)");
+          halo.addColorStop(1, "rgba(232, 161, 61, 0)");
+          ctx.globalAlpha = 1;
+          ctx.fillStyle = halo;
+          ctx.beginPath();
+          ctx.arc(f.x, f.y, gr, 0, Math.PI * 2);
+          ctx.fill();
+        }
 
         ctx.globalAlpha = gold ? Math.min(baseAlpha + 0.15, 0.8) : baseAlpha;
         ctx.fillStyle = color;
 
         // body: plain oval, rotated to the swim direction
-        const bl = 5.2 * s; // half-length
-        const bw = 2.6 * s; // half-width
-        const ang = Math.atan2(uy, ux);
         ctx.beginPath();
         ctx.ellipse(f.x, f.y, bl, bw, ang, 0, Math.PI * 2);
         ctx.fill();
@@ -157,7 +161,7 @@ export function FishCanvas() {
           ctx.fill();
           // terracotta patch
           ctx.globalAlpha = Math.min(baseAlpha + 0.15, 0.8);
-          ctx.fillStyle = koiColor;
+          ctx.fillStyle = C.koi;
           ctx.beginPath();
           ctx.arc(f.x + ux * 1.5 + px * 0.8, f.y + uy * 1.5 + py * 0.8, 1.6, 0, Math.PI * 2);
           ctx.fill();
@@ -172,7 +176,7 @@ export function FishCanvas() {
           ripples.splice(i, 1);
           continue;
         }
-        ctx.strokeStyle = inkColor;
+        ctx.strokeStyle = C.fx;
         ctx.lineWidth = 1.2;
         for (const lag of [0, 0.25]) {
           const tt = t - lag;
@@ -192,7 +196,7 @@ export function FishCanvas() {
           b.y -= 0.8;
           b.x += Math.sin(now / 300 + b.y / 20) * 0.3;
           ctx.globalAlpha = 0.5;
-          ctx.strokeStyle = inkColor;
+          ctx.strokeStyle = C.fx;
           ctx.lineWidth = 1.2;
           ctx.beginPath();
           ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
@@ -209,8 +213,8 @@ export function FishCanvas() {
             continue;
           }
           ctx.globalAlpha = t < 0.75 ? 0.8 : 0.8 * (1 - (t - 0.75) / 0.25);
-          ctx.fillStyle = inkColor;
-          ctx.font = `17px ${handFont}`;
+          ctx.fillStyle = C.fx;
+          ctx.font = `17px ${C.hand}`;
           ctx.textAlign = "center";
           ctx.fillText(`today's luck: ${fortuneForDate(new Date().toISOString().slice(0, 10))}`, Math.min(Math.max(b.x, 110), W - 110), Math.max(b.y, 24));
         }
