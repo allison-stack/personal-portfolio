@@ -13,6 +13,10 @@
 | 2026-07-11 | Data-level tests can't catch interaction-level bugs | reachability test passed while the UI made 30/41 combos unreachable (self-combos blocked by tap-toggle + drag guard) |
 | 2026-07-11 | Canvas resize clears the bitmap | FishCanvas reduced-motion path went blank on window resize until redraw added |
 | 2026-07-12 | Canvas CSS size vs bitmap size are independent (replaced elements don't stretch from inset:0) | fish only fled at tab edges — element rendered at dpr×viewport, so sim/mouse coords were misaligned 2:1; fix = width/height 100% |
+| 2026-07-15 | Scoped CSS custom properties as a theming mechanism | .pond re-declares --bg/--accent/--fish-* locally; /about never has the class, so it's safe by construction — no conditional styling logic anywhere |
+| 2026-07-15 | getComputedStyle(element) vs (documentElement) for CSS vars | FishCanvas read vars off documentElement, which never sees .pond overrides; inherited custom props must be read from an element inside the scope |
+| 2026-07-15 | React commit ordering: DOM mutations flush before passive effects | PondTheme's class swap is on the DOM before FishCanvas's [night] effect re-reads colors — same-commit re-read is race-free; two independent hourly timers would not have been |
+| 2026-07-15 | CSS specificity ties break by source order | .pond--night .pg-card (0,2,0) beats .pond .pg-card (0,2,0) only because the night block is appended after the day block |
 
 ## Predictions
 | Date | Decision | Her pick | Verdict |
@@ -25,4 +29,4 @@
 ## Re-quiz queue
 | Concept | Missed on | Next review | Passes |
 |---|---|---|---|
-| All-pairs O(n²) cost vs spatial hash (why 120 fish = ~14k pair checks, not 120) | 2026-07-11 | 2026-07-12 | 0/3 |
+| All-pairs O(n²) cost vs spatial hash (why 120 fish = ~14k pair checks, not 120) | 2026-07-15 | 2026-07-16 | 0/3 |
