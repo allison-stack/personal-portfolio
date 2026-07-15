@@ -17,7 +17,6 @@ export default function Home() {
   return (
     <PondTheme>
       <div className="pg">
-        <div className="grain" />
         <main className="pg-col">
           <section className="pg-card">
             <h1 className="title">

@@ -746,3 +746,62 @@ a:focus-visible {
   color: var(--muted);
   margin: 0;
 }
+
+/* ---------- pond water theme: day skin (/) ---------- */
+.pond {
+  --bg: #fdfbf3;         /* paper surfaces floating on the water */
+  --accent: #d1602f;     /* koi vermillion */
+  --water-line: #63a49c;
+  --fish-ink: #2e5a5e;
+  --fish-koi: #d1602f;
+  --fish-gold: #c9950c;
+  --fx-ink: rgba(255, 255, 255, 0.9);
+}
+.pond ::selection {
+  background: var(--accent);
+  color: #fdfbf3;
+}
+.water {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(120% 100% at 50% 35%, #ddf0e9 0%, #8cc3ba 55%, #63a49c 100%);
+  overflow: hidden;
+}
+.water::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background:
+    radial-gradient(220px 100px at 20% 25%, rgba(255, 255, 255, 0.32), transparent 70%),
+    radial-gradient(260px 120px at 65% 15%, rgba(255, 255, 255, 0.26), transparent 70%),
+    radial-gradient(200px 90px at 82% 55%, rgba(255, 255, 255, 0.24), transparent 70%),
+    radial-gradient(240px 110px at 35% 72%, rgba(255, 255, 255, 0.26), transparent 70%),
+    radial-gradient(200px 90px at 60% 90%, rgba(255, 255, 255, 0.22), transparent 70%);
+  animation: caustic-drift 60s ease-in-out infinite alternate;
+}
+@keyframes caustic-drift {
+  from { transform: translate3d(-1.5%, -1%, 0); }
+  to { transform: translate3d(1.5%, 1%, 0); }
+}
+.pond .pg-card {
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  /* surface tension ring + underside depth: the card floats ON the water */
+  box-shadow:
+    0 0 0 6px rgba(255, 255, 255, 0.22),
+    0 10px 24px rgba(15, 60, 60, 0.22);
+  animation: card-bob 7s ease-in-out infinite;
+}
+.pond .pg-col > .pg-card:nth-of-type(2n) {
+  animation-delay: -3.5s;
+}
+@keyframes card-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+.pond .sh {
+  text-decoration-color: var(--water-line);
+}
+.pond .scrap {
+  box-shadow: 0 4px 12px rgba(15, 60, 60, 0.18);
+}
