@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FishCanvas } from "./components/FishCanvas";
+import { PondTheme } from "./components/PondTheme";
 import { Combiner } from "./components/Combiner";
 import { scraps } from "./content/scraps";
 
@@ -15,8 +15,7 @@ function Scrap({ text, fact, side }) {
 
 export default function Home() {
   return (
-    <>
-      <FishCanvas />
+    <PondTheme>
       <div className="pg">
         <div className="grain" />
         <main className="pg-col">
@@ -67,6 +66,6 @@ export default function Home() {
           </p>
         </main>
       </div>
-    </>
+    </PondTheme>
   );
 }
