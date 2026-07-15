@@ -761,14 +761,14 @@ a:focus-visible {
   background: var(--accent);
   color: #fdfbf3;
 }
-.water {
+.pond .water {
   position: fixed;
   inset: 0;
   z-index: 0;
   background: radial-gradient(120% 100% at 50% 35%, #ddf0e9 0%, #8cc3ba 55%, #63a49c 100%);
   overflow: hidden;
 }
-.water::after {
+.pond .water::after {
   content: "";
   position: absolute;
   inset: -12%;
@@ -778,9 +778,9 @@ a:focus-visible {
     radial-gradient(200px 90px at 82% 55%, rgba(255, 255, 255, 0.24), transparent 70%),
     radial-gradient(240px 110px at 35% 72%, rgba(255, 255, 255, 0.26), transparent 70%),
     radial-gradient(200px 90px at 60% 90%, rgba(255, 255, 255, 0.22), transparent 70%);
-  animation: caustic-drift 60s ease-in-out infinite alternate;
+  animation: pond-caustic-drift 60s ease-in-out infinite alternate;
 }
-@keyframes caustic-drift {
+@keyframes pond-caustic-drift {
   from { transform: translate3d(-1.5%, -1%, 0); }
   to { transform: translate3d(1.5%, 1%, 0); }
 }
@@ -790,12 +790,12 @@ a:focus-visible {
   box-shadow:
     0 0 0 6px rgba(255, 255, 255, 0.22),
     0 10px 24px rgba(15, 60, 60, 0.22);
-  animation: card-bob 7s ease-in-out infinite;
+  animation: pond-card-bob 7s ease-in-out infinite;
 }
 .pond .pg-col > .pg-card:nth-of-type(2n) {
   animation-delay: -3.5s;
 }
-@keyframes card-bob {
+@keyframes pond-card-bob {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-2px); }
 }
