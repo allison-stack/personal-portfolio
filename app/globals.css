@@ -805,3 +805,46 @@ a:focus-visible {
 .pond .scrap {
   box-shadow: 0 4px 12px rgba(15, 60, 60, 0.18);
 }
+
+/* ---------- pond water theme: night skin (23:00-06:59 toronto) ---------- */
+.pond--night {
+  --bg: #0e2a34;
+  --ink: #e6f3f4;
+  --body: #b9cfd3;
+  --muted: #8fb4ba;
+  --line: rgba(159, 214, 222, 0.28);
+  --accent: #6fd6d6;
+  --water-line: rgba(159, 214, 222, 0.5);
+  --fish-ink: #9fc4c9;
+  --fish-koi: #e8a13d;
+  --fish-gold: #e8a13d;
+  --fx-ink: #6fd6d6;
+  color: var(--ink);
+}
+.pond--night ::selection {
+  background: var(--accent);
+  color: #071820;
+}
+.pond--night .water {
+  background: radial-gradient(120% 100% at 50% 35%, #10333d 0%, #0b2530 55%, #071820 100%);
+}
+.pond--night .water::after {
+  display: none; /* no sun, no caustics */
+}
+.pond--night .pg-card {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(159, 214, 222, 0.28);
+  backdrop-filter: blur(2px);
+  box-shadow:
+    0 0 0 6px rgba(159, 214, 222, 0.07),
+    0 10px 24px rgba(0, 0, 0, 0.35);
+}
+.pond--night .scrap,
+.pond--night .glass-sign {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(159, 214, 222, 0.25);
+  color: #c5d9db;
+}
+.pond--night .scrap-tape {
+  background: rgba(111, 214, 214, 0.18);
+}
