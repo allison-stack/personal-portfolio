@@ -19,6 +19,9 @@ export function FishCanvas({ night = false }) {
   const modeRef = useRef("flee");
   const [xray, setXray] = useState(false);
   const xrayRef = useRef(false);
+  // the toggle closes over the sim (fish/W/H/draw) inside the main effect;
+  // the pill's onClick lives outside it, so the effect hands the fn out here
+  const toggleXrayRef = useRef(null);
 
   useEffect(() => {
     modeRef.current = feeding ? "feed" : "flee";
@@ -87,6 +90,7 @@ export function FishCanvas({ night = false }) {
         draw(Date.now());
       }
     }
+    toggleXrayRef.current = toggleXray;
 
     function draw(now) {
       const C = colorsRef.current;
@@ -311,10 +315,6 @@ export function FishCanvas({ night = false }) {
       mouse.active = false;
     }
     function onPointerDown(e) {
-      if (e.target.closest('[data-scrap="think"]')) {
-        toggleXray();
-        return;
-      }
       onPointerMove(e);
       // taps on interactive things (chips, links, cards, the toggle) are not
       // water taps — only open water ripples
@@ -357,6 +357,7 @@ export function FishCanvas({ night = false }) {
     }
 
     return () => {
+      toggleXrayRef.current = null;
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerdown", onPointerDown);
@@ -376,6 +377,14 @@ export function FishCanvas({ night = false }) {
         onClick={() => setFeeding((f) => !f)}
       >
         {feeding ? "🍞 feeding — they like you" : "🍞 feed the fish"}
+      </button>
+      <button
+        type="button"
+        className="feed-toggle xray-toggle"
+        aria-pressed={xray}
+        onClick={() => toggleXrayRef.current && toggleXrayRef.current()}
+      >
+        {xray ? "🧠 those arrows are the whole brain" : "🧠 what are the fish thinking?"}
       </button>
       {night && (
         <span className="night-note" aria-hidden="true">

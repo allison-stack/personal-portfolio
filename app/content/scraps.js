@@ -34,9 +34,8 @@ export const scraps = [
   },
   {
     id: "think",
-    text: "the school isn't thinking. it's three rules — keep apart, match your neighbours, stay together.",
-    fact: "tap this scrap to x-ray their brains",
+    text: "each fish runs three rules — keep apart, match your neighbours, stay together. that's the whole brain.",
+    fact: "press the 🧠 button (bottom left) to watch them think",
     side: "left",
-    action: "think",
   },
 ];

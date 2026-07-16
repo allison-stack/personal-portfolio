@@ -893,3 +893,12 @@ button.scrap {
 .xd-ali { background: var(--xray-ali); }
 .xd-coh { background: var(--xray-coh); }
 .xd-you { background: var(--xray-you); }
+
+/* x-ray pill borrows the feed pill's look (class="feed-toggle xray-toggle")
+   and stacks above it; the legend climbs above both */
+.xray-toggle {
+  bottom: 56px;
+}
+.xray-legend {
+  bottom: 94px;
+}

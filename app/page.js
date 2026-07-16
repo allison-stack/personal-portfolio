@@ -3,22 +3,14 @@ import { PondTheme } from "./components/PondTheme";
 import { Combiner } from "./components/Combiner";
 import { scraps } from "./content/scraps";
 
-function Scrap({ text, fact, side, action }) {
-  const inner = (
-    <>
+function Scrap({ text, fact, side }) {
+  return (
+    <div className={`scrap scrap-${side}`}>
       <span className="scrap-tape" aria-hidden="true" />
       <span className="scrap-text">{text}</span>
       {fact && <span className="scrap-fact">{fact}</span>}
-    </>
+    </div>
   );
-  if (action) {
-    return (
-      <button type="button" className={`scrap scrap-${side}`} data-scrap={action}>
-        {inner}
-      </button>
-    );
-  }
-  return <div className={`scrap scrap-${side}`}>{inner}</div>;
 }
 
 export default function Home() {
