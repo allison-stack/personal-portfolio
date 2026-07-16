@@ -17,6 +17,8 @@
 | 2026-07-15 | getComputedStyle(element) vs (documentElement) for CSS vars | FishCanvas read vars off documentElement, which never sees .pond overrides; inherited custom props must be read from an element inside the scope |
 | 2026-07-15 | React commit ordering: DOM mutations flush before passive effects | PondTheme's class swap is on the DOM before FishCanvas's [night] effect re-reads colors — same-commit re-read is race-free; two independent hourly timers would not have been |
 | 2026-07-15 | CSS specificity ties break by source order | .pond--night .pg-card (0,2,0) beats .pond .pg-card (0,2,0) only because the night block is appended after the day block |
+| 2026-07-15 | Trace out-param (pay-per-use instrumentation) | stepSchool fills caller-owned trace array only when passed — observability costs nothing while nobody observes; same idea as a profiler's debug flag |
+| 2026-07-15 | Reused out-param objects must be fully overwritten | trace objects persist across frames; writing only non-zero forces would leave stale arrows pointing at predators that left — every field written every step |
 
 ## Predictions
 | Date | Decision | Her pick | Verdict |
