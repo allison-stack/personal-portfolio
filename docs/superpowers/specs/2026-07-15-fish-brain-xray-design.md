@@ -96,3 +96,15 @@ trailer · existing 27 tests stay green.
 - Human pass: overlay on/off via scrap tap and `think`, both skins, flee vectors bloom away from
   cursor, feed mode pulls toward, 375px layout, reduced-motion single-frame toggle, legend
   contrast at night.
+
+## Amendment (2026-07-16) — toggle is a pill, not the scrap
+
+Shipped scrap-as-switch failed discoverability (Allison's call: a scrap that is secretly a button
+doesn't read as pressable — scraps are decoration, pills are the page's control language). The
+toggle is now a second pill, `class="feed-toggle xray-toggle"`, stacked above the feed pill
+(bottom 56px; legend moves to 94px): idle `🧠 what are the fish thinking?` → active
+`🧠 those arrows are the whole brain`, `aria-pressed` reflecting state. The think scrap reverts to
+a plain note ("each fish runs three rules — … that's the whole brain." / fact: "press the 🧠
+button (bottom left) to watch them think"); the `action`/`data-scrap` button-scrap machinery is
+removed. Secret word `think` unchanged. The pill's onClick reaches the effect-scoped `toggleXray`
+via a `toggleXrayRef` handed out by the main effect.

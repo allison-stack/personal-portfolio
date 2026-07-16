@@ -24,3 +24,10 @@
   each fish's four decision vectors, sqrt-scaled, capped 18px. legend pill bottom-left.
 - the "flee" channel is labeled "you" because feed mode makes the cursor attract —
   the arrow is your influence, not always fear.
+
+## 2026-07-16 — x-ray toggle promoted to a pill
+
+- the button-scrap flopped: visitors read scraps as decoration, so the toggle hid in plain
+  sight. it's now a 🧠 pill stacked above the feed pill, reusing .feed-toggle's styles —
+  the page's established "this is a control" language. scrap reverted to a plain note that
+  points at the button. copy: "what are the fish thinking?" → "those arrows are the whole brain".

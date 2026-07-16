@@ -19,6 +19,8 @@
 | 2026-07-15 | CSS specificity ties break by source order | .pond--night .pg-card (0,2,0) beats .pond .pg-card (0,2,0) only because the night block is appended after the day block |
 | 2026-07-15 | Trace out-param (pay-per-use instrumentation) | stepSchool fills caller-owned trace array only when passed — observability costs nothing while nobody observes; same idea as a profiler's debug flag |
 | 2026-07-15 | Reused out-param objects must be fully overwritten | trace objects persist across frames; writing only non-zero forces would leave stale arrows pointing at predators that left — every field written every step |
+| 2026-07-16 | Perceived affordance: controls must borrow the page's established control language | think-scrap was a real button but read as decoration; fix was reusing .feed-toggle's pill look, not adding "tap me" hints |
+| 2026-07-16 | Exposing an effect-scoped closure via ref | toggleXray closes over fish/W/H/draw inside the mount effect; JSX onClick can't reach it, so the effect writes it to toggleXrayRef (nulled on cleanup) |
 
 ## Predictions
 | Date | Decision | Her pick | Verdict |
