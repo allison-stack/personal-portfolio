@@ -4,6 +4,10 @@ const TOKENS = {
   gold: ["--fish-gold", "#c9950c"],
   fx: ["--fx-ink", "rgba(255, 255, 255, 0.9)"],
   hand: ["--f-hand", "cursive"],
+  xsep: ["--xray-sep", "#e07b2f"],
+  xali: ["--xray-ali", "#2f6fb2"],
+  xcoh: ["--xray-coh", "#3f8f5f"],
+  xyou: ["--xray-you", "#c2273d"],
 };
 
 export function readFishColors(getVar) {

@@ -9,6 +9,10 @@ describe("readFishColors", () => {
       "--fish-gold": "#333",
       "--fx-ink": "#444",
       "--f-hand": "Caveat",
+      "--xray-sep": "#555",
+      "--xray-ali": "#666",
+      "--xray-coh": "#777",
+      "--xray-you": " #888 ",
     };
     expect(readFishColors((n) => vars[n])).toEqual({
       ink: "#111",
@@ -16,6 +20,10 @@ describe("readFishColors", () => {
       gold: "#333",
       fx: "#444",
       hand: "Caveat",
+      xsep: "#555",
+      xali: "#666",
+      xcoh: "#777",
+      xyou: "#888",
     });
   });
 
@@ -26,6 +34,10 @@ describe("readFishColors", () => {
       gold: "#c9950c",
       fx: "rgba(255, 255, 255, 0.9)",
       hand: "cursive",
+      xsep: "#e07b2f",
+      xali: "#2f6fb2",
+      xcoh: "#3f8f5f",
+      xyou: "#c2273d",
     });
   });
 });
