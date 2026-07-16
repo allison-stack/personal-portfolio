@@ -17,6 +17,8 @@ export function FishCanvas({ night = false }) {
   const canvasRef = useRef(null);
   const [feeding, setFeeding] = useState(false);
   const modeRef = useRef("flee");
+  const [xray, setXray] = useState(false);
+  const xrayRef = useRef(false);
 
   useEffect(() => {
     modeRef.current = feeding ? "feed" : "flee";
@@ -46,6 +48,9 @@ export function FishCanvas({ night = false }) {
     const ripples = []; // {x, y, start}
     const bubbles = []; // {x, y, popped, popStart}
     const bus = { active: false, x: 0, y: 0, start: 0 };
+    const trace = Array.from({ length: COUNT }, () => ({
+      sepX: 0, sepY: 0, aliX: 0, aliY: 0, cohX: 0, cohY: 0, youX: 0, youY: 0,
+    }));
     let koiGlintUntil = 0;
     let keyBuffer = "";
     let nextBubbleAt = Date.now() + BUBBLE_EVERY_MS[0] + Math.random() * (BUBBLE_EVERY_MS[1] - BUBBLE_EVERY_MS[0]);
@@ -70,6 +75,17 @@ export function FishCanvas({ night = false }) {
         if (t.until > now) list.push({ x: t.x, y: t.y, kind: "flee", strength: 1.5 });
       }
       return list;
+    }
+
+    function toggleXray() {
+      const on = !xrayRef.current;
+      xrayRef.current = on;
+      setXray(on);
+      if (reduced) {
+        // static frame: one traced step so the arrows appear/disappear
+        stepSchool(fish, { w: W, h: H, predators: [], trace: on ? trace : undefined });
+        draw(Date.now());
+      }
     }
 
     function draw(now) {
@@ -168,6 +184,31 @@ export function FishCanvas({ night = false }) {
         }
       }
 
+      // fish-brain x-ray: decision vectors on top of the school
+      if (xrayRef.current) {
+        ctx.globalAlpha = 0.85;
+        ctx.lineWidth = 1.2;
+        const seg = (x, y, dx, dy, color) => {
+          const mag = Math.hypot(dx, dy);
+          if (mag < 0.01) return;
+          const len = Math.min(18, 22 * Math.sqrt(mag));
+          ctx.strokeStyle = color;
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + (dx / mag) * len, y + (dy / mag) * len);
+          ctx.stroke();
+        };
+        for (let i = 0; i < fish.length; i++) {
+          const f = fish[i];
+          const t = trace[i];
+          seg(f.x, f.y, t.sepX, t.sepY, C.xsep);
+          seg(f.x, f.y, t.aliX, t.aliY, C.xali);
+          seg(f.x, f.y, t.cohX, t.cohY, C.xcoh);
+          seg(f.x, f.y, t.youX, t.youY, C.xyou);
+        }
+        ctx.lineWidth = 2.2;
+      }
+
       // ripples: two expanding rings fading over 700ms
       for (let i = ripples.length - 1; i >= 0; i--) {
         const r = ripples[i];
@@ -254,6 +295,7 @@ export function FishCanvas({ night = false }) {
           h: H,
           predators: currentPredators(now),
           params: nightRef.current ? NIGHT_PARAMS : undefined,
+          trace: xrayRef.current ? trace : undefined,
         });
         draw(now);
       }
@@ -269,6 +311,10 @@ export function FishCanvas({ night = false }) {
       mouse.active = false;
     }
     function onPointerDown(e) {
+      if (e.target.closest('[data-scrap="think"]')) {
+        toggleXray();
+        return;
+      }
       onPointerMove(e);
       // taps on interactive things (chips, links, cards, the toggle) are not
       // water taps — only open water ripples
@@ -287,6 +333,7 @@ export function FishCanvas({ night = false }) {
         bus.start = Date.now();
         bus.y = 80 + Math.random() * (H - 160);
       }
+      if (keyBuffer.endsWith("think")) toggleXray();
     }
 
     window.addEventListener("pointermove", onPointerMove, { passive: true });
@@ -333,6 +380,12 @@ export function FishCanvas({ night = false }) {
       {night && (
         <span className="night-note" aria-hidden="true">
           it&apos;s late in toronto — the fish are tired
+        </span>
+      )}
+      {xray && (
+        <span className="xray-legend" aria-hidden="true">
+          <i className="xd xd-sep" /> separation · <i className="xd xd-ali" /> alignment ·{" "}
+          <i className="xd xd-coh" /> cohesion · <i className="xd xd-you" /> you
         </span>
       )}
     </>
