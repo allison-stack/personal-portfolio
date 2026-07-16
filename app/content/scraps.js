@@ -32,4 +32,11 @@ export const scraps = [
     text: "networking is golden and criminally underrated — people know things search can't find",
     side: "right",
   },
+  {
+    id: "think",
+    text: "the school isn't thinking. it's three rules — keep apart, match your neighbours, stay together.",
+    fact: "tap this scrap to x-ray their brains",
+    side: "left",
+    action: "think",
+  },
 ];

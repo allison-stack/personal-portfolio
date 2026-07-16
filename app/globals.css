@@ -848,3 +848,48 @@ a:focus-visible {
 .pond--night .scrap-tape {
   background: rgba(111, 214, 214, 0.18);
 }
+
+/* ---------- fish-brain x-ray ---------- */
+.pond {
+  --xray-sep: #e07b2f;
+  --xray-ali: #2f6fb2;
+  --xray-coh: #3f8f5f;
+  --xray-you: #c2273d;
+}
+.pond--night {
+  --xray-sep: #ffa25c;
+  --xray-ali: #6db8ff;
+  --xray-coh: #6fe0a8;
+  --xray-you: #ff6b81;
+}
+/* scrap text was <p>, now <span> so it can live inside the think-button */
+.scrap-text,
+.scrap-fact {
+  display: block;
+}
+button.scrap {
+  appearance: none;
+  -webkit-appearance: none;
+  text-align: left;
+  cursor: pointer;
+}
+.xray-legend {
+  position: fixed;
+  left: 18px;
+  bottom: 56px; /* stacked above the feed toggle (left/bottom 18px) */
+  z-index: 2;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.xray-legend .xd {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.xd-sep { background: var(--xray-sep); }
+.xd-ali { background: var(--xray-ali); }
+.xd-coh { background: var(--xray-coh); }
+.xd-you { background: var(--xray-you); }
