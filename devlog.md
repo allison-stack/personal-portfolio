@@ -15,3 +15,12 @@
 - homepage got a real skin: sunlit-pond day mode (water gradient, drifting caustics, floating cards) and a night-tank mode (glass cards, glowing koi) after 11pm toronto, replacing the old dim-only night — both scoped under `.pond`/`.pond--night` so `/about` stays 0 lines changed, untouched by construction.
 - the gotcha: FishCanvas was reading its palette via `getComputedStyle(document.documentElement)`, which never sees `.pond`-scoped overrides — it now reads off its own canvas element and re-reads whenever the night prop flips.
 - 27 tests passing now (up from 22) — added coverage for the night-hour boundary and the fish-color fallbacks.
+
+## 2026-07-15 — fish-brain x-ray
+
+- stepSchool now takes an optional `trace` array and fills per-fish force components
+  (sep/ali/coh/you) — zero cost when omitted, so the force math stays single-source.
+- new think-scrap (a real <button>) and secret word `think` toggle an overlay drawing
+  each fish's four decision vectors, sqrt-scaled, capped 18px. legend pill bottom-left.
+- the "flee" channel is labeled "you" because feed mode makes the cursor attract —
+  the arrow is your influence, not always fear.
