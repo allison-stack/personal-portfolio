@@ -25,6 +25,7 @@
 | 2026-07-12 | How do taps/cat-swipes coexist with the mouse predator? | A: predator list with TTLs | Agreed — generalize an interface when the second consumer appears; B special-cases, C re-implements physics per scare type |
 | 2026-07-11 | Combiner mechanic | New element + fun fact per discovery | Agreed — the fact payout is what makes it hers, not an Infinite Craft clone |
 | 2026-07-11 | Old homepage | Move intact to /about | Agreed — recruiters lose nothing, playground stays uncompromised |
+| 2026-07-15 | How does the x-ray get force vectors out of stepSchool? | A: optional trace out-param | Agreed — though "the backend already did the work" isn't quite it (forces are computed then discarded); the concepts are single source of truth for the force math + pay-per-use trace hook |
 
 ## Re-quiz queue
 | Concept | Missed on | Next review | Passes |
