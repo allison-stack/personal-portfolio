@@ -1,5 +1,7 @@
 // Pure boids simulation — no DOM. Spatial hash keeps neighbor search O(n)
 // per frame (grid cell = perception radius, so neighbors live in 9 cells).
+// Pass opts.trace (an array) to capture per-fish force components; omitted,
+// the sim does zero extra work.
 export const DEFAULTS = {
   perception: 50,
   separationDist: 16,
@@ -29,7 +31,8 @@ export function createFish(count, w, h, rand = Math.random) {
   return fish;
 }
 
-export function stepSchool(fish, { w, h, predators = [], params, rand = Math.random }) {
+export function stepSchool(fish, opts) {
+  const { w, h, predators = [], params, rand = Math.random } = opts;
   const p = { ...DEFAULTS, ...params };
   const cell = p.perception;
 
@@ -41,9 +44,11 @@ export function stepSchool(fish, { w, h, predators = [], params, rand = Math.ran
     else grid.set(k, [i]);
   }
 
+  const trace = opts.trace;
+
   for (let i = 0; i < fish.length; i++) {
     const f = fish[i];
-    let ax = 0, ay = 0;
+    let sx = 0, sy = 0; // separation
     let cx = 0, cy = 0, avx = 0, avy = 0, n = 0;
 
     const gx = Math.floor(f.x / cell);
@@ -64,20 +69,22 @@ export function stepSchool(fish, { w, h, predators = [], params, rand = Math.ran
           if (d2 < p.separationDist * p.separationDist && d2 > 0.0001) {
             const d = Math.sqrt(d2);
             const push = p.separationForce * (1 - d / p.separationDist);
-            ax -= (dx / d) * push;
-            ay -= (dy / d) * push;
+            sx -= (dx / d) * push;
+            sy -= (dy / d) * push;
           }
         }
       }
     }
 
+    let chx = 0, chy = 0, alx = 0, aly = 0; // cohesion, alignment
     if (n > 0) {
-      ax += (cx / n - f.x) * p.cohesionForce;
-      ay += (cy / n - f.y) * p.cohesionForce;
-      ax += (avx / n - f.vx) * p.alignForce;
-      ay += (avy / n - f.vy) * p.alignForce;
+      chx = (cx / n - f.x) * p.cohesionForce;
+      chy = (cy / n - f.y) * p.cohesionForce;
+      alx = (avx / n - f.vx) * p.alignForce;
+      aly = (avy / n - f.vy) * p.alignForce;
     }
 
+    let yx = 0, yy = 0; // net predator/feed influence ("you")
     for (const pr of predators) {
       if (!pr || pr.active === false) continue;
       const px = f.x - pr.x;
@@ -88,16 +95,26 @@ export function stepSchool(fish, { w, h, predators = [], params, rand = Math.ran
         const strength = pr.strength ?? 1;
         if (pr.kind === "feed") {
           const pull = p.feedForce * strength * (1 - pd / p.fleeRadius);
-          ax -= (px / pd) * pull;
-          ay -= (py / pd) * pull;
+          yx -= (px / pd) * pull;
+          yy -= (py / pd) * pull;
         } else {
           const push = p.fleeForce * strength * (1 - pd / p.fleeRadius);
-          ax += (px / pd) * push;
-          ay += (py / pd) * push;
+          yx += (px / pd) * push;
+          yy += (py / pd) * push;
         }
       }
     }
 
+    if (trace) {
+      const t = trace[i] || (trace[i] = {});
+      t.sepX = sx; t.sepY = sy;
+      t.aliX = alx; t.aliY = aly;
+      t.cohX = chx; t.cohY = chy;
+      t.youX = yx; t.youY = yy;
+    }
+
+    let ax = sx + chx + alx + yx;
+    let ay = sy + chy + aly + yy;
     ax += (rand() - 0.5) * p.wander;
     ay += (rand() - 0.5) * p.wander;
 
